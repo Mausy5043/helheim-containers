@@ -1,5 +1,5 @@
 [Unit]
-Description=Run test3 container
+Description=Run test1 container
 Wants=network-online.target
 After=network-online.target
 
@@ -7,9 +7,9 @@ After=network-online.target
 Restart=always
 ExecStart=/usr/bin/podman run \
     --rm \
-    --name test3 \
-    helheim/test3:latest
-ExecStop=/usr/bin/podman stop test3
+    --name test1 \
+    helheim/test1:latest
+ExecStop=/usr/bin/podman stop test1
 
 [Install]
 WantedBy=default.target
