@@ -39,7 +39,7 @@ while IFS= read -r container || [ -n "$container" ]; do
 done < "${WORKLIST}"
 
 # Replace the original worklist
-mv "${TMP_WORKLIST}" "${WORKLIST}"
+sudo mv "${TMP_WORKLIST}" "${WORKLIST}"
 chmod 644 "${WORKLIST}"
 
 echo "Update pipeline completed."
