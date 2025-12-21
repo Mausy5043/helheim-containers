@@ -1,0 +1,4 @@
+FROM alpine:latest
+LABEL org.opencontainers.image.title="test3"
+LABEL org.opencontainers.image.description="Minimal test container"
+CMD ["sleep", "infinity"]
