@@ -5,5 +5,5 @@ git pull
 
 repo_root="$(cd "$(dirname "$0")/" && pwd)"
 
-cp "${repo_root}/systemd/user/*" "${HOME}/.config/systemd/user/"
+cp "${repo_root}/systemd/user/"* "${HOME}/.config/systemd/user/"
 systemctl --user daemon-reload
