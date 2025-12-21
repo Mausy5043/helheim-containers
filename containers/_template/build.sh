@@ -6,3 +6,9 @@
 # ... optionally pushes it
 # ... optionally restarts the container
 # This keeps container-specific logic out of the global scripts.
+
+set -eu
+
+cd "$(dirname "$0")"
+
+# podman build \
