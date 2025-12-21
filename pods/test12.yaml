@@ -4,6 +4,8 @@ metadata:
   name: test12
   annotations:
     io.podman.annotations.network: slirp4netns
+    io.podman.annotations.podman-pause: "false"
+
 spec:
   containers:
   - name: test1
