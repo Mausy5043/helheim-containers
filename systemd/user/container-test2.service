@@ -8,6 +8,7 @@ Restart=always
 ExecStart=/usr/bin/podman run \
     --rm \
     --name test2 \
+    --network=slirp4netns \
     helheim/test2:latest
 ExecStop=/usr/bin/podman stop test2
 
