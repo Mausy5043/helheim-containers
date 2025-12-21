@@ -3,7 +3,7 @@
 git reset --hard origin/master
 git pull
 
-pushd "$(dirname "$0")" || exit 1
+repo_root="$(cd "$(dirname "$0")/" && pwd)"
 
-cp "./systemd/user/*" "${HOME}/.config/systemd/user/"
+cp "${repo_root}/systemd/user/*" "${HOME}/.config/systemd/user/"
 systemctl --user daemon-reload
