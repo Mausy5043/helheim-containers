@@ -1,0 +1,33 @@
+# Podman / OCI build artifacts
+containers/**/container.tar
+containers/**/oci-layout
+containers/**/rootfs
+containers/**/build-output/
+containers/**/tmp/
+
+# Logs
+*.log
+logs/
+bin/*.log
+
+# Editor / IDE files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+*.kate-swp
+
+# macOS / Windows cruft (just in case)
+.DS_Store
+Thumbs.db
+
+# Python virtualenvs (if helpers ever use Python)
+venv/
+.env/
+
+# Shell history (if accidentally copied)
+.history
+
+# Generated worklists (never version-controlled)
+containers-to-build.conf
