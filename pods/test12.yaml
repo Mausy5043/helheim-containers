@@ -13,5 +13,3 @@ spec:
   - name: test2
     image: helheim/test2:latest
     command: [ "sleep", "infinity" ]
-
-metadata:
