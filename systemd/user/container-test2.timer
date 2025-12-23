@@ -4,7 +4,7 @@ Description=Run container-test2.service every 59 minutes
 
 [Timer]
 OnUnitActiveSec=59min
-AccuracySec=1min
+AccuracySec=5min
 Persistent=true
 
 [Install]
