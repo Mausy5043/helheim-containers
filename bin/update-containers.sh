@@ -17,6 +17,11 @@ if [ ! -s "${WORKLIST}" ]; then
     exit 0
 fi
 
+# install new services/timers
+cp -rv "${REPO_ROOT}/systemd/user/"* "${HOME}/.config/systemd/user/"
+chmod -R 644 "${HOME}/.config/systemd/user/"*
+systemctl --user daemon-reload
+
 # Temporary file for updated worklist
 TMP_WORKLIST="$(mktemp)"
 
@@ -35,15 +40,11 @@ while IFS= read -r container || [ -n "$container" ]; do
         # Keep it in the worklist for next run
         echo "${container}" >> "${TMP_WORKLIST}"
     fi
-
+    echo ""
 done < "${WORKLIST}"
 
 # Replace the original worklist
 sudo mv "${TMP_WORKLIST}" "${WORKLIST}"
 chmod 644 "${WORKLIST}"
-
-cp "${REPO_ROOT}/systemd/user/"* "${HOME}/.config/systemd/user/"
-chmod 644 "${HOME}/.config/systemd/user/"*
-systemctl --user daemon-reload
 
 echo "Update pipeline completed."
