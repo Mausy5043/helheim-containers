@@ -6,11 +6,12 @@ After=network-online.target
 
 [Service]
 Type=oneshot
+RemainAfterExit=yes
 # Remove any old container with the same name
 ExecStartPre=/usr/bin/podman rm -f test2 >/dev/null 2>&1 || true
 
 # Run the container to completion
-ExecStart=/usr/bin/podman run --rm --name test2  helheim/test2:latest
+ExecStart=/usr/bin/podman run --rm --detach --name test2  helheim/test2:latest
 
 
 [Install]
