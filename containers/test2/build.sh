@@ -9,4 +9,4 @@ podman build \
   --file Containerfile \
   .
 
-echo "You can now enable the helheim-test2.timer to run this container."
+printf "\nYou can now enable the helheim-test2.timer to run this container.\n\n"

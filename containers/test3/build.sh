@@ -10,4 +10,4 @@ podman build \
   .
 
 
-echo "You can now enable/start the helheim-test3.service to run this container."
+printf "\nYou can now enable/start the helheim-test3.service to run this container.\n\n"

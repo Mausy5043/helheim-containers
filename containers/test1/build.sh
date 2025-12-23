@@ -9,4 +9,4 @@ podman build \
   --file Containerfile \
   .
 
-echo "You can now enable/start the helheim-test1.service to run this container."
+printf "\nYou can now enable/start the helheim-test1.service to run this container.\n\n"
