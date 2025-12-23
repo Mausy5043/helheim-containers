@@ -1,0 +1,11 @@
+# ~/.config/systemd/user/container-test2.timer
+[Unit]
+Description=Run container-test2.service every 59 minutes
+
+[Timer]
+OnUnitActiveSec=59min
+AccuracySec=1min
+Persistent=true
+
+[Install]
+WantedBy=timers.target
