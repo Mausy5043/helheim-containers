@@ -42,4 +42,8 @@ done < "${WORKLIST}"
 sudo mv "${TMP_WORKLIST}" "${WORKLIST}"
 chmod 644 "${WORKLIST}"
 
+cp "${REPO_ROOT}/systemd/user/"* "${HOME}/.config/systemd/user/"
+chmod 644 "${HOME}/.config/systemd/user/"*
+systemctl --user daemon-reload
+
 echo "Update pipeline completed."
