@@ -1,4 +1,6 @@
-FROM alpine:latest
-LABEL org.opencontainers.image.title="test2"
-LABEL org.opencontainers.image.description="Minimal test container"
-CMD ["sleep", "infinity"]
+FROM python:3.12-slim
+
+WORKDIR /app
+COPY script.py .
+
+CMD ["python", "/app/script.py"]

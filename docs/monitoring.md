@@ -1,8 +1,5 @@
-`podman ps`
-List running containers.
-
-`podman ps -a`
-List all containers, including stopped or failed ones.
+`podman ps [-a]`
+List running containers. `-a` lists all, including stopped or failed ones.
 
 `podman inspect <name>`
 Show full container details.
@@ -33,15 +30,6 @@ Open a shell inside a running container.
 
 `podman exec -it <name> bash`
 Open a bash shell if available.
-
-`podman pod ps`
-List pods.
-
-`podman pod inspect <podname>`
-Inspect pod details.
-
-`podman pod top <podname>`
-Show processes inside a pod.
 
 `podman images`
 List images.
