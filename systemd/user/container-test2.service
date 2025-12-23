@@ -1,16 +1,17 @@
+# ~/.config/systemd/user/container-test2.service
 [Unit]
-Description=Run test2 container
+Description=Run hourly Python job in container test2
 Wants=network-online.target
 After=network-online.target
 
 [Service]
-Restart=always
-ExecStart=/usr/bin/podman run \
-    --rm \
-    --name test2 \
-    --network=slirp4netns \
-    helheim/test2:latest
-ExecStop=/usr/bin/podman stop test2
+Type=oneshot
+# Remove any old container with the same name
+ExecStartPre=/usr/bin/podman rm -f test2 >/dev/null 2>&1 || true
+
+# Run the container to completion
+ExecStart=/usr/bin/podman run --rm --name test2  helheim/test2:latest
+
 
 [Install]
 WantedBy=default.target
