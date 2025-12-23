@@ -29,7 +29,8 @@ while IFS= read -r container || [ -n "$container" ]; do
     # Skip empty lines or whitespace
     [ -z "${container// }" ] && continue
 
-    echo "\nBuilding container: ${container}"
+    echo
+    echo "Building container: ${container}"
 
     if "${BUILDER}" "${container}"; then
         echo "SUCCESS: ${container}"
