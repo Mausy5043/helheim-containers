@@ -19,7 +19,6 @@ fi
 
 # install new services/timers
 cp -rv "${REPO_ROOT}/systemd/user/"* "${HOME}/.config/systemd/user/"
-chmod -R 644 "${HOME}/.config/systemd/user/"* 2>/dev/null || true
 systemctl --user daemon-reload
 
 # Temporary file for updated worklist
