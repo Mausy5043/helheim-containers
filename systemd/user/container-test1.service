@@ -7,7 +7,6 @@ After=network-online.target
 Restart=always
 ExecStart=/usr/bin/podman run \
     --rm \
-    --detach \
     --name test1 \
     --network=slirp4netns \
     helheim/test1:latest
