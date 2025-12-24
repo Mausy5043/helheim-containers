@@ -1,15 +1,13 @@
 [Unit]
-Description=Run test3 container
+Description=test3 container (service)
 Wants=network-online.target
 After=network-online.target
 
 [Service]
-Restart=always
 ExecStart=/usr/bin/podman run \
     --rm \
     --name test3 \
     helheim/test3:latest
-ExecStop=/usr/bin/podman stop test3
 
 [Install]
 WantedBy=default.target

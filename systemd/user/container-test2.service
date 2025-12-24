@@ -1,18 +1,10 @@
-# ~/.config/systemd/user/container-test2.service
+# ~/.config/systemd/user/container-test2.timer
 [Unit]
-Description=Run hourly Python job in container test2
-Wants=network-online.target
-After=network-online.target
+Description=hourly container-test2.service (timer)
 
-[Service]
-Type=oneshot
-RemainAfterExit=yes
-# Remove any old container with the same name
-ExecStartPre=/usr/bin/podman rm -f test2 >/dev/null 2>&1 || true
-
-# Run the container to completion
-ExecStart=/usr/bin/podman run --rm --detach --name test2  helheim/test2:latest
-
+[Timer]
+OnCalendar=*-*-* *:01
+RandomizedDelaySec=5m
 
 [Install]
-WantedBy=default.target
+WantedBy=timers.target
