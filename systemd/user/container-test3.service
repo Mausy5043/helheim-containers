@@ -6,6 +6,7 @@ After=network-online.target
 [Service]
 ExecStart=/usr/bin/podman run \
     --rm \
+    --detach \
     --name test3 \
     helheim/test3:latest
 

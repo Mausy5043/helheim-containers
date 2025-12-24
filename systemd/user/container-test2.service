@@ -1,10 +1,9 @@
-# ~/.config/systemd/user/container-test2.timer
+# ~/.config/systemd/user/container-test2.service
 [Unit]
-Description=hourly container-test2.service (timer)
+Description=Hourly Python job in container test2
+Wants=container-test2.timer
 
-[Timer]
-OnCalendar=*-*-* *:01
-RandomizedDelaySec=5m
-
-[Install]
-WantedBy=timers.target
+[Service]
+Type=oneshot
+#RemainAfterExit=yes
+ExecStart=/usr/bin/podman run --rm --detach --name test2  helheim/test2:latest
