@@ -7,9 +7,13 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Enable required modules and remove Debian's placeholder
+RUN ln -s ../conf-available/10-accesslog.conf /etc/lighttpd/conf-enabled/10-accesslog.conf && \
+    ln -s ../conf-available/10-dir-listing.conf /etc/lighttpd/conf-enabled/10-dir-listing.conf && \
+    rm -f /etc/lighttpd/conf-enabled/99-unconfigured.conf
+
 # Create directories expected by lighttpd
-RUN mkdir -p /var/www/html \
-    && mkdir -p /etc/lighttpd/conf.d
+RUN mkdir -p /var/www/html
 
 # Expose internal HTTP port
 EXPOSE 80
