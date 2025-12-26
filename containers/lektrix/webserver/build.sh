@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -eu
+
+cd "$(dirname "$0")"
 
 IMAGE_TAG="lektrix/webserver:latest"
 
