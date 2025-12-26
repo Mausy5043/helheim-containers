@@ -11,7 +11,7 @@ podman build \
     --file Containerfile \
     .
 
-cp ./config/* /srv/containers/lektrix/config
+cp -rv ./config/* /srv/containers/lektrix/config
 
 echo
 echo "You can run the container with: podman run -d -p 8080:80 ${IMAGE_TAG}"
