@@ -1,13 +1,14 @@
 import math
 import multiprocessing
 import time
+import random
 
 # Amount of work per process (increase for heavier benchmarks)
-ITERATIONS = 50_000_000
+ITERATIONS = 87_654_321
 
 
 def cpu_work(n):
-    x = 0.0001
+    x = 0.0001 * random.random()
     for _ in range(n):
         x = math.sqrt(x * x + 1)
     return x  # return value prevents optimization
@@ -21,7 +22,7 @@ def worker(n, return_dict, idx):
 
 
 if __name__ == "__main__":
-    cores = multiprocessing.cpu_count()
+    cores = multiprocessing.cpu_count() - 1  # Reserve one core for system
     print(f"Running benchmark on {cores} cores...")
 
     manager = multiprocessing.Manager()
