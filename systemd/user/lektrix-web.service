@@ -1,0 +1,28 @@
+[Unit]
+Description=lektrix static webserver (lighttpd; service)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+# Always recreate the container to avoid stale state
+ExecStartPre=/usr/bin/podman rm -f lektrix-webserver 2>/dev/null || true
+
+ExecStart=/usr/bin/podman run \
+    --name lektrix-webserver \
+    --rm \
+    --publish 8080:80 \
+    --volume /srv/containers/lektrix/www:/var/www/html:ro \
+    --volume /srv/containers/lektrix/config:/etc/lighttpd:ro \
+    lektrix/webserver:latest
+
+ExecStop=/usr/bin/podman stop lektrix-webserver
+
+Restart=on-failure
+RestartSec=5
+
+# Rootless Podman best practices
+Type=simple
+TimeoutStopSec=15
+
+[Install]
+WantedBy=default.target

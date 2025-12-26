@@ -1,0 +1,18 @@
+# Containerfile for lektrix/webserver:latest
+FROM debian:stable-slim
+
+# Install lighttpd
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends lighttpd && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Create directories expected by lighttpd
+RUN mkdir -p /var/www/html \
+    && mkdir -p /etc/lighttpd/conf.d
+
+# Expose internal HTTP port
+EXPOSE 80
+
+# Entrypoint
+CMD ["/usr/sbin/lighttpd", "-D", "-f", "/etc/lighttpd/lighttpd.conf"]
