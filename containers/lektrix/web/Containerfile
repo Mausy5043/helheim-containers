@@ -1,4 +1,4 @@
-# Containerfile for lektrix/webserver:latest
+# Containerfile for lektrix/web:latest
 FROM debian:stable-slim
 
 # Install lighttpd
