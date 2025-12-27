@@ -8,8 +8,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Enable required modules and remove Debian's placeholder
-RUN ln -s ../conf-available/10-accesslog.conf /etc/lighttpd/conf-enabled/10-accesslog.conf && \
-    ln -s ../conf-available/10-dir-listing.conf /etc/lighttpd/conf-enabled/10-dir-listing.conf && \
+RUN ln -s ../conf-available/10-dir-listing.conf /etc/lighttpd/conf-enabled/10-dir-listing.conf && \
     rm -f /etc/lighttpd/conf-enabled/99-unconfigured.conf
 
 # Create directories expected by lighttpd
