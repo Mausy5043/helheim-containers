@@ -16,7 +16,8 @@ ExecStart=/usr/bin/podman run \
     lektrix/web:latest
 
 ExecStop=/usr/bin/podman stop lektrix-web
-
+StandardOutput=null
+StandardError=null
 Restart=on-failure
 RestartSec=5
 
