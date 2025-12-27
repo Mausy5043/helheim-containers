@@ -1,9 +1,10 @@
 # Containerfile for lektrix/trend:latest
 FROM python:3.13-slim
 
-# Install system build dependencies
+# Install system operational & build dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
+    bc \
     build-essential \
     curl \
     gfortran \
