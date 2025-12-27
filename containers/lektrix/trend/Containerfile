@@ -1,9 +1,33 @@
 # Containerfile for lektrix/trend:latest
 FROM python:3.13-slim
 
-# No requirements installed yet
-# No scripts copied
-# No environment variables set
+# Install system build dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    build-essential \
+    gfortran \
+    pkg-config \
+    libopenblas-dev \
+    liblapack-dev \
+    libfreetype6-dev \
+    libpng-dev \
+    libzstd-dev \
+    liblz4-dev \
+    libsqlite3-dev \
+    curl \
+    git && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-WORKDIR /inspect
+# Create working directory
+WORKDIR /app
+
+# Copy requirements from host into container
+# (host path: /home/beheer/git/lektrix/requirements.txt)
+COPY /home/beheer/git/lektrix/requirements.txt /app/requirements.txt
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r /app/requirements.txt
+
+# Default command: open a shell (scripts are mounted at runtime)
 CMD ["bash"]
