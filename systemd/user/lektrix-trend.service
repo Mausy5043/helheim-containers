@@ -1,0 +1,28 @@
+[Unit]
+Description=periodic trending electricity data (service)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+# Make sure we have the latest database before creating the trend graphs
+ExecStartPre=scp pi@rbmon.lan:/srv/rmt/_databases/lektrix/lektrix.v2.sqlite3 /srv/containers/lektrix/data/
+# Excecute the hourly trending script inside a rootless Podman container
+ExecStart=/usr/bin/podman run \
+    --name lektrix-trend \
+    --rm \
+    --detach \
+    --volume /etc/localtime:/etc/localtime:ro \
+    --volume /home/beheer/git/lektrix/bin:/app/scripts:ro \
+    --volume /srv/containers/lektrix/data:/app/data:rw \
+    --volume /srv/containers/lektrix/www:/app/www:rw \
+    lektrix/trend:latest
+    bash /app/scripts/hourly.sh
+
+# Rootless Podman best practices
+Type=simple
+TimeoutStopSec=15
+StandardOutput=null
+StandardError=null
+
+# [Install]
+# WantedBy=default.target
