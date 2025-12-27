@@ -8,6 +8,7 @@ RUN apt-get update && \
     curl \
     gfortran \
     git \
+    nano \
     pkg-config \
     sqlite3 \
     tree \
