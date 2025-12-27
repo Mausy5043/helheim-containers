@@ -9,7 +9,8 @@ ExecStart=/usr/bin/podman run \
     --rm \
     --name test1 \
     --network=slirp4netns \
-    helheim/test1:latest
+    --volume /etc/localtime:/etc/localtime:ro \
+      helheim/test1:latest
 ExecStop=/usr/bin/podman stop test1
 
 [Install]

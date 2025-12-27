@@ -11,9 +11,10 @@ ExecStart=/usr/bin/podman run \
     --name lektrix-web \
     --rm \
     --publish 18080:80 \
+    --volume /etc/localtime:/etc/localtime:ro \
     --volume /srv/containers/lektrix/www:/var/www/html:ro \
     --volume /srv/containers/lektrix/config/lighttpd.conf:/etc/lighttpd/lighttpd.conf:ro \
-    lektrix/web:latest
+      lektrix/web:latest
 
 ExecStop=/usr/bin/podman stop lektrix-web
 StandardOutput=null

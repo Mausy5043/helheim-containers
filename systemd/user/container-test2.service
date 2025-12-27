@@ -6,4 +6,9 @@ Wants=container-test2.timer
 [Service]
 Type=oneshot
 #RemainAfterExit=yes
-ExecStart=/usr/bin/podman run --rm --detach --name test2  helheim/test2:latest
+ExecStart=/usr/bin/podman run \
+    --rm \
+    --detach \
+    --volume /etc/localtime:/etc/localtime:ro \
+    --name test2 \
+      helheim/test2:latest

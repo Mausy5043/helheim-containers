@@ -8,7 +8,8 @@ ExecStart=/usr/bin/podman run \
     --rm \
     --network=slirp4netns \
     --name test3 \
-    helheim/test3:latest
+    --volume /etc/localtime:/etc/localtime:ro \
+      helheim/test3:latest
 
 [Install]
 WantedBy=default.target
