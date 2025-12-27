@@ -1,0 +1,9 @@
+# Containerfile for lektrix/trend:latest
+FROM python:3.13-slim
+
+# No requirements installed yet
+# No scripts copied
+# No environment variables set
+
+WORKDIR /inspect
+CMD ["bash"]
