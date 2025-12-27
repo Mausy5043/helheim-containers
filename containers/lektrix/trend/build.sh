@@ -16,10 +16,12 @@ podman build \
 
 printf "\nYou can now enable/start the lektrix-trend.service to run this container.\n\n"
 
-
-# podman run -it --rm \
-#     -v /home/beheer/git/lektrix/bin:/app/scripts:ro \
-#     -v /srv/containers/lektrix/data:/app/data:rw \
-#     -v /srv/containers/lektrix/www:/app/www:rw \
-#     lektrix/trend:latest \
-#     bash
+exit 0
+# shellcheck disable=SC2034
+podman run -it --rm  \
+    -v /etc/localtime:/etc/localtime:ro \
+    -v /home/beheer/git/lektrix/bin:/app/scripts:ro \
+    -v /srv/containers/lektrix/data:/app/data:rw \
+    -v /srv/containers/lektrix/www:/app/www:rw \
+    lektrix/trend:latest \
+    bash
