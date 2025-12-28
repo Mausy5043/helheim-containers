@@ -1,0 +1,39 @@
+# Containerfile for lektrix/prices:latest
+FROM python:3.13-slim
+
+# Install system operational & build dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    bc \
+    build-essential \
+    curl \
+    gfortran \
+    git \
+    nano \
+    pkg-config \
+    sqlite3 \
+    tree \
+    libfreetype6-dev \
+    liblapack-dev \
+    liblz4-dev \
+    libopenblas-dev \
+    libpng-dev \
+    libsqlite3-dev \
+    libzstd-dev
+
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Create working directory
+WORKDIR /app
+
+# Copy requirements from host into container
+# (host path: /home/beheer/git/lektrix/requirements.txt)
+# use build parameter: --build-context lektrix=/home/beheer/git/lektrix
+COPY --from=lektrix requirements.txt /app/requirements.txt
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r /app/requirements.txt
+
+# Default command: open a shell (scripts are mounted at runtime)
+CMD ["bash"]
