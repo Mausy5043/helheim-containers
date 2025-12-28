@@ -15,7 +15,6 @@ ExecStartPre=scp pi@rbmon.lan:/srv/rmt/_databases/lektrix/lektrix.v2.sqlite3 /sr
 ExecStart=/usr/bin/podman run \
     --name lektrix-trend-cp \
     --rm \
-    --detach \
     --volume /etc/localtime:/etc/localtime:ro \
     --volume /home/beheer/git/lektrix/bin:/app/scripts:ro \
     --volume /srv/containers/lektrix/data:/app/data:rw \
@@ -25,6 +24,7 @@ ExecStart=/usr/bin/podman run \
 
 # Rootless Podman best practices
 Type=simple
+TimeoutStopSec=0
 StandardOutput=null
 StandardError=null
 
