@@ -11,7 +11,7 @@ After=network-online.target
 [Service]
 # Execute the hourly trending script inside a rootless Podman container
 ExecStart=/usr/bin/podman run \
-    --name lektrix-trend \
+    --name lektrix-trend-cp \
     --rm \
     --detach \
     --volume /etc/localtime:/etc/localtime:ro \
@@ -23,7 +23,6 @@ ExecStart=/usr/bin/podman run \
 
 # Rootless Podman best practices
 Type=simple
-TimeoutStopSec=15
 StandardOutput=null
 StandardError=null
 

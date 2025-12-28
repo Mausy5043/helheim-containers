@@ -24,7 +24,6 @@ RestartSec=5
 
 # Rootless Podman best practices
 Type=simple
-TimeoutStopSec=15
 
 [Install]
 WantedBy=default.target
