@@ -19,6 +19,7 @@ printf "\nYou can now enable/start the lektrix-trend.service to run this contain
 exit 0
 # shellcheck disable=SC2034
 podman run -it --rm  \
+    --name lektrix-trend-dev \
     -v /etc/localtime:/etc/localtime:ro \
     -v /home/beheer/git/lektrix/bin:/app/scripts:ro \
     -v /srv/containers/lektrix/data:/app/data:rw \
