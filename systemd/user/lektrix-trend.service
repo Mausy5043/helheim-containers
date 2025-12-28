@@ -1,5 +1,6 @@
 [Unit]
 Description=periodic trending electricity data (service)
+Wants=lektrix-trend.timer
 Wants=network-online.target
 After=network-online.target
 

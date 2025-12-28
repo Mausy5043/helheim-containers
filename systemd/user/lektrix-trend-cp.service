@@ -5,6 +5,7 @@
 
 [Unit]
 Description=periodic scp & trending electricity data (service)
+Wants=lektrix-trend-cp.timer
 Wants=network-online.target
 After=network-online.target
 
