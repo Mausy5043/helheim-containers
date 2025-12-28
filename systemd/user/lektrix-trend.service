@@ -4,8 +4,6 @@ Wants=network-online.target
 After=network-online.target
 
 [Service]
-# Make sure we have the latest database before creating the trend graphs
-ExecStartPre=scp pi@rbmon.lan:/srv/rmt/_databases/lektrix/lektrix.v2.sqlite3 /srv/containers/lektrix/data/
 # Excecute the hourly trending script inside a rootless Podman container
 ExecStart=/usr/bin/podman run \
     --name lektrix-trend \
