@@ -23,5 +23,6 @@ podman run -it --rm  \
     -v /etc/localtime:/etc/localtime:ro \
     -v /home/beheer/git/lektrix/bin:/app/scripts:ro \
     -v /srv/containers/lektrix/data:/app/data:rw \
+    -v /srv/containers/lektrix/config:/app/config:ro \
     lektrix/prices:latest \
     bash
