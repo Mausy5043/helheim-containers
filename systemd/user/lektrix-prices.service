@@ -17,6 +17,7 @@ ExecStart=/usr/bin/podman run \
     --volume /etc/localtime:/etc/localtime:ro \
     --volume /home/beheer/git/lektrix/bin:/app/scripts:ro \
     --volume /srv/containers/lektrix/data:/app/data:rw \
+    --volume /srv/containers/lektrix/config:/app/config:ro \
     lektrix/prices:latest \
     ./scripts/prices.py
 

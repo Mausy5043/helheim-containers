@@ -21,8 +21,8 @@ exit 0
 podman run -it --rm  \
     --name lektrix-prices-dev \
     -v /etc/localtime:/etc/localtime:ro \
-    -v /home/beheer/git/lektrix/bin:/app/scripts:ro \
+    -v /home/beheer/git/lektrix/bin:/app/scripts:rw \
     -v /srv/containers/lektrix/data:/app/data:rw \
-    -v /srv/containers/lektrix/config:/app/config:ro \
+    -v /srv/containers/lektrix/config:/app/config:rw \
     lektrix/prices:latest \
     bash
