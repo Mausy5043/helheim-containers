@@ -1,0 +1,30 @@
+# This service is for daily collection of hourly electricity prices
+
+[Unit]
+Description=collecting electricity prices (service)
+Wants=lektrix-prices.timer
+Wants=network-online.target
+After=network-online.target
+
+# [Service]
+# Type=oneshot
+
+[Service]
+# Excecute the hourly trending script inside a rootless Podman container
+ExecStart=/usr/bin/podman run \
+    --name lektrix-prices \
+    --rm \
+    --volume /etc/localtime:/etc/localtime:ro \
+    --volume /home/beheer/git/lektrix/bin:/app/scripts:ro \
+    --volume /srv/containers/lektrix/data:/app/data:rw \
+    lektrix/prices:latest \
+    ./scripts/prices.py
+
+# Rootless Podman best practices
+Type=simple
+TimeoutStopSec=0
+StandardOutput=null
+StandardError=null
+
+# [Install]
+# WantedBy=default.target
