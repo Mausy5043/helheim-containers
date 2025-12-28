@@ -23,6 +23,7 @@ ExecStart=/usr/bin/podman run \
 
 # Rootless Podman best practices
 Type=simple
+TimeoutStopSec=infinity   # No timeout for stopping
 StandardOutput=null
 StandardError=null
 
