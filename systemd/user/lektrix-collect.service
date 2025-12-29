@@ -11,7 +11,8 @@ After=network-online.target
 ExecStart=/usr/bin/podman run \
     --name lektrix-collect \
     --rm \
-    --network=slirp4netns \
+    --network=slirp4netns:allow_host_loopback=true \
+    --dns=192.168.2.2 \
     --volume /etc/localtime:/etc/localtime:ro \
     --volume /home/beheer/git/lektrix/bin:/app/scripts:ro \
     --volume /srv/containers/lektrix/data:/app/data:rw \
@@ -19,11 +20,10 @@ ExecStart=/usr/bin/podman run \
     lektrix/collect:latest \
     ./scripts/__.py
 
-# Rootless Podman best practices
 Type=simple
-TimeoutStopSec=0
+TimeoutStartSec=270
+TimeoutStopSec=30
+# StandardOutput=journal
+# StandardError=journal
 StandardOutput=null
 StandardError=null
-
-# [Install]
-# WantedBy=default.target
