@@ -1,0 +1,10 @@
+# This timer is for triggering the periodic collection of electricity data
+
+[Unit]
+Description=collecting electricity data (timer)
+
+[Timer]
+OnCalendar=*-*-* *:00/5
+
+[Install]
+WantedBy=timers.target
