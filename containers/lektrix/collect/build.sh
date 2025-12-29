@@ -20,6 +20,8 @@ exit 0
 # shellcheck disable=SC2034
 podman run -it --rm  \
     --name lektrix-collect-dev \
+    --network=slirp4netns:allow_host_loopback=true \
+     --dns=192.168.2.2 \
     -v /etc/localtime:/etc/localtime:ro \
     -v /home/beheer/git/lektrix/bin:/app/scripts:rw \
     -v /srv/containers/lektrix/data:/app/data:rw \
