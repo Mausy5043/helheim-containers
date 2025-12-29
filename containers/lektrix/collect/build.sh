@@ -7,12 +7,12 @@ IMAGE_TAG="lektrix/collect:latest"
 
 echo "Building ${IMAGE_TAG}..."
 podman build \
-    --tag "${IMAGE_TAG}"  \
+    --tag "${IMAGE_TAG}" \
+    --pull=always \
+    --no-cache \
     --build-context lektrix=/home/beheer/git/lektrix \
     --file Containerfile \
     .
-
-# cp -rv ./config/* /srv/containers/lektrix/config
 
 printf "\nYou can now enable/start the lektrix-collect.service to run this container.\n\n"
 
