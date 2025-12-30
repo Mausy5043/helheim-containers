@@ -19,7 +19,7 @@ ExecStart=/usr/bin/podman run \
     --volume /srv/containers/lektrix/data:/app/data:rw \
     --volume /srv/containers/lektrix/config:/app/config:ro \
     lektrix/prices:latest \
-    ./scripts/prices.py
+    /app/scripts/prices.py
 
 # Rootless Podman best practices
 Type=simple

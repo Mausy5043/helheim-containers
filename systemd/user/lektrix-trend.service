@@ -14,7 +14,7 @@ ExecStart=/usr/bin/podman run \
     --volume /srv/containers/lektrix/data:/app/data:rw \
     --volume /srv/containers/lektrix/www:/app/www:rw \
     lektrix/trend:latest \
-    ./scripts/hourly.sh
+    /app/scripts/hourly.sh
 
 # Rootless Podman best practices
 Type=simple
