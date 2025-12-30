@@ -21,10 +21,11 @@ exit 0
 podman run -it --rm  \
     --name lektrix-collect-dev \
     --network=slirp4netns:allow_host_loopback=true \
-     --dns=192.168.2.2 \
-    -v /etc/localtime:/etc/localtime:ro \
-    -v /home/beheer/git/lektrix/bin:/app/scripts:rw \
-    -v /srv/containers/lektrix/data:/app/data:rw \
-    -v /srv/containers/lektrix/config:/app/config:rw \
+    --dns=192.168.2.2 \
+    --volume /etc/localtime:/etc/localtime:ro \
+    --volume /home/beheer/git/lektrix/bin:/app/scripts:rw \
+    --volume /srv/containers/lektrix/data:/app/data:rw \
+    --volume /srv/containers/lektrix/config:/app/config:rw \
+    --volume /srv/containers/lektrix/www:/app/www:rw \
     lektrix/collect:latest \
     bash
