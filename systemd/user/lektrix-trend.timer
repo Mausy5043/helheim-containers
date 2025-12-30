@@ -4,8 +4,8 @@
 Description=periodic trending electricity data (timer)
 
 [Timer]
-OnCalendar=*-*-* *:03,13,23,33,43,53,59
-RandomizedDelaySec=20s
+OnCalendar=*:09/10
+RandomizedDelaySec=1m
 
 [Install]
 WantedBy=timers.target
