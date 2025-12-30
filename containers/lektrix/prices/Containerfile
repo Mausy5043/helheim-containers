@@ -1,27 +1,24 @@
 # Containerfile for lektrix/prices:latest
-FROM python:3.13-slim
+FROM python:3.12-slim
 
 # Install system operational & build dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    bc \
-    build-essential \
-    curl \
-    gfortran \
-    git \
-    nano \
-    pkg-config \
-    sqlite3 \
-    tree \
-    libfreetype6-dev \
-    liblapack-dev \
-    liblz4-dev \
-    libopenblas-dev \
-    libpng-dev \
-    libsqlite3-dev \
-    libzstd-dev
-
-RUN apt-get clean && \
+        bc \
+        curl \
+        git \
+        nano \
+        pkg-config \
+        sqlite3 \
+        tree \
+        libfreetype6 \
+        liblapack3 \
+        liblz4-1 \
+        libopenblas0 \
+        libpng16-16t64 \
+        libsqlite3-0 \
+        libzstd1 && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Create working directory
