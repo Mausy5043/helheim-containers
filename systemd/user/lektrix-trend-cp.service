@@ -28,6 +28,10 @@ Type=simple
 TimeoutStopSec=0
 StandardOutput=null
 StandardError=null
+Restart=no
+# RestartSec=5s
+# StartLimitBurst=2
+# StartLimitIntervalSec=1800
 
 # [Install]
 # WantedBy=default.target
