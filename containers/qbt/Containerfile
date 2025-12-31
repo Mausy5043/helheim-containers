@@ -1,3 +1,22 @@
 FROM debian:stable-slim
 
-CMD ["bash"]
+# Install minimal tools needed to fetch the static binary
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    ca-certificates \
+    curl && \
+    rm -rf /var/lib/apt/lists/*
+
+# Create qbt user/group with UID/GID 1000
+RUN groupadd -g 1000 qbt && \
+    useradd -u 1000 -g 1000 -m qbt
+
+# Download static qbittorrent-nox (amd64)
+# NOTE: We will verify the actual URL after build; do not assume stability.
+RUN curl -L -o /usr/local/bin/qbittorrent-nox \
+    https://github.com/userdocs/qbittorrent-nox-static/releases/latest/download/qbittorrent-nox-x86_64-musl && \
+    chmod +x /usr/local/bin/qbittorrent-nox
+
+USER qbt
+
+CMD ["qbittorrent-nox", "--version"]
