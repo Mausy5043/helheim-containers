@@ -11,6 +11,13 @@ RUN apt-get update && \
 RUN groupadd -g 1000 qbt && \
     useradd -u 1000 -g 1000 -m qbt
 
+# Create runtime directories inside the container
+# (These will be bind-mounted from /srv/containers/qbt/* on the host)
+RUN mkdir -p /config/logs && \
+    mkdir -p /incomplete && \
+    mkdir -p /complete && \
+    chown -R qbt:qbt /config /incomplete /complete
+
 # Download static qbittorrent-nox (amd64)
 RUN curl -L \
     -o /usr/local/bin/qbittorrent-nox \
@@ -19,4 +26,9 @@ RUN curl -L \
 
 USER qbt
 
-CMD ["qbittorrent-nox", "--version"]
+# Entrypoint: run qbittorrent-nox in foreground mode
+# Logging will be configured later via qBittorrent.conf
+ENTRYPOINT ["/usr/local/bin/qbittorrent-nox"]
+
+# Default: show version for inspection
+CMD ["--version"]
