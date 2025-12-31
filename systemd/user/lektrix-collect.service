@@ -17,6 +17,7 @@ ExecStart=/usr/bin/podman run \
     --volume /home/beheer/git/lektrix/bin:/app/scripts:ro \
     --volume /srv/containers/lektrix/data:/app/data:rw \
     --volume /srv/containers/lektrix/config:/app/config:ro \
+    --volume /srv/containers/lektrix/www:/app/www:rw \
     lektrix/collect:latest \
     /app/scripts/collect.sh
 Restart=no
