@@ -10,6 +10,7 @@ set -euo pipefail
 WORKLIST="/var/lib/sysupdate/containers-to-build.conf"
 REPO_ROOT="${HOME}/git/helheim-containers"
 BUILDER="${REPO_ROOT}/bin/build-container.sh"
+SYSTEMD="${REPO_ROOT}/bin/update-systemd.sh"
 
 # Nothing to do if the worklist is missing or empty
 if [ ! -s "${WORKLIST}" ]; then
@@ -18,8 +19,7 @@ if [ ! -s "${WORKLIST}" ]; then
 fi
 
 # install new services/timers
-cp -rv "${REPO_ROOT}/systemd/user/"* "${HOME}/.config/systemd/user/"
-systemctl --user daemon-reload
+exec "${SYSTEMD}" || exit 1
 
 # Temporary file for updated worklist
 TMP_WORKLIST="$(mktemp)"
