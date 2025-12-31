@@ -1,0 +1,41 @@
+[Unit]
+Description=qBittorrent (static, rootless, foreground)
+Wants=network-online.target
+After=network-online.target
+
+[Container]
+# Image built locally as qbt:latest
+Image=qbt:latest
+
+# Bind mounts (host -> container)
+Volume=/srv/containers/qbt/config:/config
+Volume=/srv/containers/qbt/incomplete:/incomplete
+Volume=/srv/containers/qbt/complete:/complete
+
+# Publish ports
+# WebUI (only one exposed in the image)
+PublishPort=1340:1340/tcp
+
+# BitTorrent ports (TCP + UDP)
+PublishPort=8999:8999/tcp
+PublishPort=8999:8999/udp
+
+# Embedded tracker
+PublishPort=9000:9000/tcp
+
+# Run in foreground (ENTRYPOINT already set)
+# No need for Exec= override
+
+# Restart policy
+Restart=always
+# Optional: delay to avoid hammering on failure
+RestartSec=360
+
+# Rootless container
+UserNS=keep-id
+
+# Clean shutdown
+StopTimeout=15
+
+[Install]
+WantedBy=default.target
