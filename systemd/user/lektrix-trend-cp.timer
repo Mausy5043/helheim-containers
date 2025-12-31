@@ -4,7 +4,7 @@
 Description=periodic scp & trending electricity data (timer)
 
 [Timer]
-OnCalendar=*:04:30
+OnCalendar=*:58:30
 RandomizedDelaySec=1m
 
 [Install]

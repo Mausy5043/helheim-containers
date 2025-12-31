@@ -4,7 +4,7 @@
 Description=periodic trending electricity data (timer)
 
 [Timer]
-OnCalendar=*:09/10
+OnCalendar=*:05/15
 RandomizedDelaySec=1m
 
 [Install]

@@ -4,7 +4,7 @@
 Description=collecting electricity prices (timer)
 
 [Timer]
-OnCalendar=*-*-* 01,12..18:07:00
+OnCalendar=*-*-* 01,12..18:03:00
 RandomizedDelaySec=30s
 
 [Install]
