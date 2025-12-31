@@ -12,9 +12,9 @@ RUN groupadd -g 1000 qbt && \
     useradd -u 1000 -g 1000 -m qbt
 
 # Download static qbittorrent-nox (amd64)
-# NOTE: We will verify the actual URL after build; do not assume stability.
-RUN curl -L -o /usr/local/bin/qbittorrent-nox \
-    https://github.com/userdocs/qbittorrent-nox-static/releases/latest/download/qbittorrent-nox-x86_64-musl && \
+RUN curl -L \
+    -o /usr/local/bin/qbittorrent-nox \
+    https://github.com/userdocs/qbittorrent-nox-static/releases/download/release-5.1.4_v2.0.11/x86_64-qbittorrent-nox && \
     chmod +x /usr/local/bin/qbittorrent-nox
 
 USER qbt
