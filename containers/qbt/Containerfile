@@ -19,6 +19,11 @@ RUN apt-get update && \
     zlib1g-dev \
     libssl-dev \
     libboost-all-dev \
+    qt6-base-dev \
+    qt6-base-private-dev \
+    qt6-tools-dev \
+    qt6-tools-private-dev \
+    qt6-svg-dev \
     qttools5-dev-tools \
     libqt5xmlpatterns5-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -30,7 +35,7 @@ WORKDIR /tmp
 ###############################
 ARG LIBTORRENT_VERSION=2.0.11
 
-RUN git clone --branch v${LIBTORRENT_VERSION} https://github.com/arvidn/libtorrent.git && \
+RUN git -c advice.detachedHead=false clone --branch v${LIBTORRENT_VERSION} https://github.com/arvidn/libtorrent.git && \
     cd libtorrent && \
     git submodule update --init --recursive && \
     cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local && \
@@ -42,12 +47,12 @@ RUN git clone --branch v${LIBTORRENT_VERSION} https://github.com/arvidn/libtorre
 ###############################
 ARG QBITTORRENT_VERSION=5.0.3
 
-RUN git clone --branch release-${QBITTORRENT_VERSION} --depth=1 https://github.com/qbittorrent/qBittorrent.git && \
+RUN git -c advice.detachedHead=false clone --branch release-${QBITTORRENT_VERSION} --depth=1 https://github.com/qbittorrent/qBittorrent.git && \
     cd qBittorrent && \
     cmake -B build \
     -DCMAKE_BUILD_TYPE=Release \
     -DGUI=OFF \
-    -DQT6=OFF \
+    -DQT6=ON \
     -DCMAKE_INSTALL_PREFIX=/usr/local && \
     cmake --build build -j$(nproc) && \
     cmake --install build
@@ -70,7 +75,11 @@ RUN apt-get update && \
     libboost-chrono1.83.0 \
     libboost-random1.83.0 \
     libboost-serialization1.83.0 \
-    libqt5xmlpatterns5 && \
+    qt6-base-dev-tools \
+    libqt6core6 \
+    libqt6network6 \
+    libqt6xml6 \
+    libqt6concurrent6 && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copy artifacts from builder
