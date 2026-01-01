@@ -34,6 +34,12 @@ podman run -it --rm  \
     qbt:latest
 podman run -it --rm  \
     --name qbt-dev \
+    --network=slirp4netns:allow_host_loopback=true \
+    --dns=192.168.2.2 \
+    --publish 1340:1340/tcp \
     --volume /etc/localtime:/etc/localtime:ro \
-    --volume /srv/containers/qbt/config:/qbt/config:rw,U \
+    --volume /srv/containers/qbt/config:/qbt/config:rw \
+    --volume /srv/containers/qbt/downloads:/qbt/downloads:rw \
+    --volume /srv/containers/qbt/incomplete:/qbt/incomplete:rw \
+    --volume /srv/containers/qbt/monitor:/qbt/monitor:rw \
     qbt:latest
