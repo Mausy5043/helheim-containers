@@ -6,15 +6,18 @@ After=network-online.target
 [Container]
 # Image built locally as qbt:latest
 Image=localhost/qbt:latest
+# Network=slirp4netns
+# DNS=192.168.2.2
 
 # Rootless container
 UserNS=keep-id
 
 # Bind mounts (host -> container)
-Volume=/srv/containers/qbt/config:/qbt/config
-Volume=/srv/containers/qbt/incomplete:/qbt/incomplete
-Volume=/srv/containers/qbt/downloads:/qbt/downloads
-Volume=/srv/containers/qbt/monitor:/qbt/monitor
+Volume=/etc/localtime:/etc/localtime:ro
+Volume=/srv/containers/qbt/config:/qbt/config:rw
+Volume=/srv/containers/qbt/incomplete:/qbt/incomplete:rw
+Volume=/srv/containers/qbt/downloads:/qbt/downloads:rw
+Volume=/srv/containers/qbt/monitor:/qbt/monitor:rw
 
 # Publish ports
 # WebUI (only one exposed in the image)
