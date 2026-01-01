@@ -32,4 +32,4 @@ EXPOSE 1340/tcp
 ENTRYPOINT ["/usr/local/bin/qbittorrent-nox"]
 
 # Default: show version for inspection
-CMD ["--version"]
+CMD []

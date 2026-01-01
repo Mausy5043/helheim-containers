@@ -5,7 +5,10 @@ After=network-online.target
 
 [Container]
 # Image built locally as qbt:latest
-Image=qbt:latest
+Image=localhost/qbt:latest
+
+# Rootless container
+UserNS=keep-id
 
 # Bind mounts (host -> container)
 Volume=/srv/containers/qbt/config:/config
@@ -25,17 +28,11 @@ PublishPort=9000:9000/tcp
 
 # Run in foreground (ENTRYPOINT already set)
 # No need for Exec= override
-
+[Service]
 # Restart policy
 Restart=always
-# Optional: delay to avoid hammering on failure
-RestartSec=360
-
-# Rootless container
-UserNS=keep-id
-
-# Clean shutdown
-StopTimeout=15
+RestartSec=36
+TimeoutStopSec=15
 
 [Install]
 WantedBy=default.target
