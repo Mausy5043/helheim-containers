@@ -91,9 +91,9 @@ RUN echo "/usr/local/lib" > /etc/ld.so.conf.d/usr-local-lib.conf && \
     ldconfig
 
 # Create runtime directories
-RUN mkdir -p /config /downloads && \
+RUN mkdir -p /config /downloads /incomplete /monitor && \
     useradd -m qbittorrent && \
-    chown -R qbittorrent:qbittorrent /config /downloads
+    chown -R qbittorrent:qbittorrent /config /downloads /incomplete /monitor
 
 # Use the default UID=1000; GID=1000 username: qbittorrent
 USER qbittorrent

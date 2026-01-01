@@ -32,3 +32,8 @@ podman run -it --rm  \
     --volume /srv/containers/qbt/config:/config:rw \
     --entrypoint="/usr/bin/bash" \
     qbt:latest
+podman run -it --rm  \
+    --name qbt-dev \
+    --volume /etc/localtime:/etc/localtime:ro \
+    --volume /srv/containers/qbt/config:/config:rw \
+    qbt:latest
