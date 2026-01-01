@@ -30,8 +30,9 @@ WORKDIR /tmp
 ###############################
 ARG LIBTORRENT_VERSION=2.0.11
 
-RUN git clone --branch v${LIBTORRENT_VERSION} --depth=1 https://github.com/arvidn/libtorrent.git && \
+RUN git clone --branch v${LIBTORRENT_VERSION} https://github.com/arvidn/libtorrent.git && \
     cd libtorrent && \
+    git submodule update --init --recursive && \
     cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local && \
     cmake --build build -j$(nproc) && \
     cmake --install build
