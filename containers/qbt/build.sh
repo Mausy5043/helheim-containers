@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
-set -eu
+set -euo pipefail
 
 cd "$(dirname "$0")"
 
 IMAGE_TAG="qbt:latest"
 
-echo "Building ${IMAGE_TAG}..."
 podman build \
     --tag "${IMAGE_TAG}" \
     --pull=always \
@@ -13,9 +12,11 @@ podman build \
     --file Containerfile \
     .
 
+
 # printf "\nYou can now enable/start the qbt.service to run this container.\n\n"
 
 exit 0
+# below is example command to copy&paste to run container interactively
 # shellcheck disable=SC2034
 
     # --network=slirp4netns:allow_host_loopback=true \
