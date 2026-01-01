@@ -11,9 +11,9 @@ Image=localhost/qbt:latest
 UserNS=keep-id
 
 # Bind mounts (host -> container)
-Volume=/srv/containers/qbt/config:/config
-Volume=/srv/containers/qbt/incomplete:/incomplete
-Volume=/srv/containers/qbt/complete:/complete
+Volume=/srv/containers/qbt/config:/qbt/config
+Volume=/srv/containers/qbt/incomplete:/qbt/incomplete
+Volume=/srv/containers/qbt/complete:/qbt/complete
 
 # Publish ports
 # WebUI (only one exposed in the image)
