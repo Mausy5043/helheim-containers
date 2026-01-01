@@ -85,6 +85,10 @@ RUN apt-get update && \
 # Copy artifacts from builder
 COPY --from=builder /usr/local /usr/local
 
+# Ensure dynamic linker can find libtorrent
+RUN echo "/usr/local/lib" > /etc/ld.so.conf.d/usr-local-lib.conf && \
+    ldconfig
+
 # Create runtime directories
 RUN mkdir -p /config /downloads && \
     useradd -m qbittorrent && \
