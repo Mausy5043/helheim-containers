@@ -1,7 +1,11 @@
-FROM debian:stable
+###############################
+# Stage 1 — Build environment #
+###############################
+FROM debian:stable AS builder
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Base tools
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     build-essential \
@@ -10,11 +14,78 @@ RUN apt-get update && \
     git \
     tree \
     nano \
-    libboost-all-dev \
-    libssl-dev \
-    zlib1g-dev \
+    ca-certificates \
     python3 \
+    zlib1g-dev \
+    libssl-dev \
+    libboost-all-dev \
     qttools5-dev-tools \
-    libqt5xmlpatterns5-dev \
-    ca-certificates && \
+    libqt5xmlpatterns5-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /tmp
+
+###############################
+# Build libtorrent 2.0.11     #
+###############################
+ARG LIBTORRENT_VERSION=2.0.11
+
+RUN git clone --branch v${LIBTORRENT_VERSION} --depth=1 https://github.com/arvidn/libtorrent.git && \
+    cd libtorrent && \
+    cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local && \
+    cmake --build build -j$(nproc) && \
+    cmake --install build
+
+###############################
+# Build qBittorrent 5.0.3     #
+###############################
+ARG QBITTORRENT_VERSION=5.0.3
+
+RUN git clone --branch release-${QBITTORRENT_VERSION} --depth=1 https://github.com/qbittorrent/qBittorrent.git && \
+    cd qBittorrent && \
+    cmake -B build \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DGUI=OFF \
+    -DQT6=OFF \
+    -DCMAKE_INSTALL_PREFIX=/usr/local && \
+    cmake --build build -j$(nproc) && \
+    cmake --install build
+
+################################
+# Stage 2 — Runtime environment #
+################################
+FROM debian:stable
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Runtime dependencies only
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    tree \
+    nano \
+    libssl3 \
+    zlib1g \
+    libboost-system1.83.0 \
+    libboost-chrono1.83.0 \
+    libboost-random1.83.0 \
+    libboost-serialization1.83.0 \
+    libqt5xmlpatterns5 && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Copy artifacts from builder
+COPY --from=builder /usr/local /usr/local
+
+# Create runtime directories
+RUN mkdir -p /config /downloads && \
+    useradd -m qbittorrent && \
+    chown -R qbittorrent:qbittorrent /config /downloads
+
+# Create qbt user/group with UID/GID 1000
+RUN groupadd -g 1000 qbit && \
+    useradd -u 1000 -g 1000 -m qbit
+
+USER qbit
+
+EXPOSE 1340/tcp
+
+ENTRYPOINT ["/usr/local/bin/qbittorrent-nox --profile=/config", "--webui-port=1340"]
