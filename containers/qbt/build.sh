@@ -29,5 +29,6 @@ exit 0
 podman run -it --rm  \
     --name qbt-dev \
     --volume /etc/localtime:/etc/localtime:ro \
-    qbt:latest \
-    bash
+    --volume /srv/containers/qbt/config:/config:rw \
+    --entrypoint="/usr/bin/bash" \
+    qbt:latest
