@@ -100,4 +100,4 @@ USER qbittorrent
 
 EXPOSE 1340/tcp
 
-ENTRYPOINT ["/usr/local/bin/qbittorrent-nox", "--profile=/config", "--webui-port=1340"]
+ENTRYPOINT ["/usr/local/bin/qbittorrent-nox", "--profile=/qbt/config", "--webui-port=1340"]
