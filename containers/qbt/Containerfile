@@ -52,7 +52,6 @@ RUN git -c advice.detachedHead=false clone --branch release-${QBITTORRENT_VERSIO
     cmake -B build \
     -DCMAKE_BUILD_TYPE=Release \
     -DGUI=OFF \
-    -DQT6=ON \
     -DCMAKE_INSTALL_PREFIX=/usr/local && \
     cmake --build build -j$(nproc) && \
     cmake --install build
