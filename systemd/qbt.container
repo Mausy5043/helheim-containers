@@ -6,8 +6,8 @@ After=network-online.target
 [Container]
 # Image built locally as qbt:latest
 Image=localhost/qbt:latest
-# Network=slirp4netns
-# DNS=192.168.2.2
+Network=pasta
+DNS=192.168.2.2
 
 # Rootless container
 UserNS=keep-id

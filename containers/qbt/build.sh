@@ -34,7 +34,7 @@ podman run -it --rm  \
     qbt:latest
 podman run -it --rm  \
     --name qbt-dev \
-    --network=slirp4netns:allow_host_loopback=true \
+    --network=pasta \
     --dns=192.168.2.2 \
     --publish 1340:1340/tcp \
     --volume /etc/localtime:/etc/localtime:ro \
