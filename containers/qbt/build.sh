@@ -7,11 +7,12 @@ IMAGE_TAG="qbt:latest"
 
 podman build \
     --tag "${IMAGE_TAG}" \
-    --pull=always \
-    --no-cache \
     --file Containerfile \
     .
 
+# not used for testing
+    # --pull=always \
+    # --no-cache \
 
 # printf "\nYou can now enable/start the qbt.service to run this container.\n\n"
 
