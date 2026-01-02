@@ -31,6 +31,9 @@ podman run -it --rm  \
     --name qbt-r-dev \
     --volume /etc/localtime:/etc/localtime:ro \
     --volume /srv/containers/qbt-r/config:/qbt-r/config:rw,U \
+    --volume /srv/containers/qbt-r/downloads:/qbt-r/downloads:rw,U \
+    --volume /srv/containers/qbt-r/incomplete:/qbt-r/incomplete:rw,U \
+    --volume /srv/containers/qbt-r/monitor:/qbt-r/monitor:rw,U \
     --entrypoint="/usr/bin/bash" \
     qbt-r:latest
 
