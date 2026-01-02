@@ -33,6 +33,8 @@ PublishPort=9000:9000/tcp
 # Run in foreground (ENTRYPOINT already set)
 # No need for Exec= override
 [Service]
+Type=simple
+NotifyAccess=none
 # Restart policy
 Restart=always
 RestartSec=36
