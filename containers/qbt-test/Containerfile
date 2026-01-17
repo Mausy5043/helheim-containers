@@ -5,6 +5,10 @@ FROM debian:stable AS builder
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+# versions to build
+ARG LIBTORRENT_VERSION=2.0.11
+ARG QBITTORRENT_VERSION=5.1.4
+
 # Base tools
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -30,9 +34,8 @@ RUN apt-get update && \
 WORKDIR /tmp
 
 ###############################
-# Build libtorrent 2.0.11     #
+# Build libtorrent            #
 ###############################
-ARG LIBTORRENT_VERSION=2.0.11
 
 RUN git -c advice.detachedHead=false clone --branch v${LIBTORRENT_VERSION} https://github.com/arvidn/libtorrent.git && \
     cd libtorrent && \
@@ -42,9 +45,8 @@ RUN git -c advice.detachedHead=false clone --branch v${LIBTORRENT_VERSION} https
     cmake --install build
 
 ###############################
-# Build qBittorrent 5.1.4     #
+# Build qBittorrent           #
 ###############################
-ARG QBITTORRENT_VERSION=5.1.4
 
 RUN git -c advice.detachedHead=false clone --branch release-${QBITTORRENT_VERSION} --depth=1 https://github.com/qbittorrent/qBittorrent.git && \
     cd qBittorrent && \
