@@ -42,9 +42,9 @@ RUN git -c advice.detachedHead=false clone --branch v${LIBTORRENT_VERSION} https
     cmake --install build
 
 ###############################
-# Build qBittorrent 5.0.4     #
+# Build qBittorrent 5.1.4     #
 ###############################
-ARG QBITTORRENT_VERSION=5.0.4
+ARG QBITTORRENT_VERSION=5.1.4
 
 RUN git -c advice.detachedHead=false clone --branch release-${QBITTORRENT_VERSION} --depth=1 https://github.com/qbittorrent/qBittorrent.git && \
     cd qBittorrent && \
