@@ -16,3 +16,4 @@ cp -rv "${REPO_ROOT}/systemd/"*.container "${HOME}/.config/containers/systemd/" 
 systemctl --user daemon-reload
 
 echo "Update of user services/timers completed."
+exit 0
