@@ -20,9 +20,6 @@ if [ ! -s "${WORKLIST}" ]; then
 fi
 
 pushd "${REPO_ROOT}" || exit 1
-    # install new services/timers
-    exec "${SYSTEMD}"
-
     # Temporary file for updated worklist
     TMP_WORKLIST="$(mktemp)"
 
@@ -50,5 +47,8 @@ pushd "${REPO_ROOT}" || exit 1
     chmod 644 "${WORKLIST}"
 
     echo "Update pipeline completed."
+
+    # install new services/timers
+    exec "${SYSTEMD}"
 
 popd || exit 1
