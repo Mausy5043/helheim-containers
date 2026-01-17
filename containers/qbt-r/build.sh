@@ -7,14 +7,12 @@ IMAGE_TAG="qbt-r:latest"
 
 podman build \
     --tag "${IMAGE_TAG}" \
+    --pull=always \
+    --no-cache \
     --file Containerfile \
     .
 
-# not used for testing
-    # --pull=always \
-    # --no-cache \
-
-# printf "\nYou can now enable/start the qbt.service to run this container.\n\n"
+printf "\nYou can now enable/start the qbt.service to run this container.\n\n"
 
 exit 0
 # below is example command to copy&paste to run container interactively
