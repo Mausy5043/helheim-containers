@@ -21,7 +21,7 @@ fi
 
 pushd "${REPO_ROOT}" || exit 1
     # install new services/timers
-    exec "${SYSTEMD}" || exit 1
+    exec "${SYSTEMD}"
 
     # Temporary file for updated worklist
     TMP_WORKLIST="$(mktemp)"
