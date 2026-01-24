@@ -1,17 +1,14 @@
-# This service does the same as `lektrix-trend.service` but adds an scp step before trending
-# so that the latest database from rbmon.lan is always used.
-# This service and the corresponding timer can be retired once the lektrix collectors are
-# in place on helheim.lan
+# This service does the same as `lektrix-trend.service` but adds a maintenance step before trending
+# so that the latest database is backuped etcetera.
+
 
 [Unit]
-Description=periodic scp & trending electricity data (service)
+Description=periodic maintenance & trending electricity data (service)
 Wants=lektrix-trend-cp.timer
 Wants=network-online.target
 After=network-online.target
 
 [Service]
-# Make sure we have the latest database before creating the trend graphs
-ExecStartPre=scp pi@rbmon.lan:/srv/rmt/_databases/lektrix/lektrix.v2.sqlite3 /srv/containers/lektrix/data/
 # Execute the hourly trending script inside a rootless Podman container
 ExecStart=/usr/bin/podman run \
     --name lektrix-trend-cp \
@@ -21,7 +18,7 @@ ExecStart=/usr/bin/podman run \
     --volume /srv/containers/lektrix/data:/app/data:rw \
     --volume /srv/containers/lektrix/www:/app/www:rw \
     lektrix/trend:latest \
-    /app/scripts/hourly.sh -
+    /app/scripts/hourly.sh -maintenance
 
 # Rootless Podman best practices
 Type=simple
