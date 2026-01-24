@@ -1,10 +1,10 @@
 # This timer is for triggering the trending of data
 
 [Unit]
-Description=periodic scp & trending electricity data (timer)
+Description=periodic maintenance of electricity data (timer)
 
 [Timer]
-OnCalendar=*:58:30
+OnCalendar=*:01:30
 RandomizedDelaySec=1m
 
 [Install]

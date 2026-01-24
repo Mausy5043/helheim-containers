@@ -1,9 +1,8 @@
-# This service does the same as `lektrix-trend.service` but adds a maintenance step before trending
-# so that the latest database is backuped etcetera.
-
+# This service executes a maintenance step
+# so that the latest database is backup-ed etcetera.
 
 [Unit]
-Description=periodic maintenance & trending electricity data (service)
+Description=periodic maintenance of electricity data (service)
 Wants=lektrix-trend-cp.timer
 Wants=network-online.target
 After=network-online.target
