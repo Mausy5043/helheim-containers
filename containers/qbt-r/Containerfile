@@ -29,8 +29,7 @@ RUN apt-get update && \
     qt6-tools-private-dev \
     qt6-svg-dev \
     libqt5xmlpatterns5-dev && \
-    apt-get clean && rm -rf /var/lib/apt/lists/* && \
-    python3 -m pip install --no-cache-dir --root-user-action ignore --upgrade pip
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /tmp
 
