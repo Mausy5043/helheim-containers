@@ -8,6 +8,7 @@ After=network-online.target
 
 [Service]
 # Excecute the hourly trending script inside a rootless Podman container
+ExecStartPre=/usr/bin/podman rm -f lektrix-collect 2>/dev/null || true
 ExecStart=/usr/bin/podman run \
     --name lektrix-collect \
     --rm \

@@ -10,6 +10,7 @@ After=network-online.target
 # Type=oneshot
 
 [Service]
+ExecStartPre=/usr/bin/podman rm -f lektrix-prices 2>/dev/null || true
 # Excecute the hourly trending script inside a rootless Podman container
 ExecStart=/usr/bin/podman run \
     --name lektrix-prices \
