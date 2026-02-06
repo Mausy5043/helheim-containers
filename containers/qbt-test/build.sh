@@ -7,6 +7,7 @@ IMAGE_TAG="qbt-test:latest"
 
 podman build \
     --tag "${IMAGE_TAG}" \
+    --pull=true \
     --file Containerfile \
     .
 

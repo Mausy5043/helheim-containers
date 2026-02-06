@@ -8,8 +8,7 @@ IMAGE_TAG="lektrix/web:latest"
 echo "Building ${IMAGE_TAG}..."
 podman build \
     --tag "${IMAGE_TAG}"  \
-    --pull=always \
-    --no-cache \
+    --pull=true \
     --file Containerfile \
     .
 
