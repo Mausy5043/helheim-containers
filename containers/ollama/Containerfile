@@ -1,10 +1,12 @@
 # Use a ROCm-enabled base image
 FROM docker.io/rocm/rocm-terminal:latest
+USER root
 
 # Install Ollama dependencies
 RUN apt-get update && apt-get install -y \
     curl \
     ca-certificates \
+    zstd \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Ollama
@@ -17,14 +19,16 @@ ENV HIP_VISIBLE_DEVICES=0
 RUN useradd -m -s /bin/bash ollama \
     && chown -R ollama:ollama /home/ollama
 
-USER ollama
-WORKDIR /home/ollama
+USER rocm
+
+# USER ollama
+# WORKDIR /home/ollama
 
 # Expose the Ollama API port
-EXPOSE 11434
+# EXPOSE 11434
 
 # Volume for model storage (persistent across container restarts)
-VOLUME /home/ollama/.ollama
+# VOLUME /home/ollama/.ollama
 
 # Entrypoint to start Ollama
 # ENTRYPOINT ["ollama", "serve"]
