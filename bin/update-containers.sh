@@ -18,9 +18,14 @@ if [ ! -s "${WORKLIST}" ]; then
     exit 0
 fi
 
+cleanup() {
+    rm -f "${TMP_WORKLIST:-}"
+}
+
 pushd "${REPO_ROOT}" || exit 1
     # Temporary file for updated worklist
     TMP_WORKLIST="$(mktemp)"
+    trap cleanup EXIT
 
     # Process each container name
     while IFS= read -r container || [ -n "$container" ]; do
@@ -48,6 +53,6 @@ pushd "${REPO_ROOT}" || exit 1
     echo "Update pipeline completed."
 
     # install new services/timers
-    exec "${SYSTEMD}"
+    . "${SYSTEMD}"
 
 popd || exit 1
