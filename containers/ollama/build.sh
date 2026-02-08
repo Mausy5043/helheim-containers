@@ -14,7 +14,9 @@ podman build \
 
 #
 # Uncomment for testing:
-# podman run -it --rm  \
+# podman run -it --rm  \ 
+#     -p 127.0.0.1:11434:11434 \
+#     -v /srv/containers/ollama:/home/ollama/.ollama 
 #     --device=/dev/kfd \
 #     --device=/dev/dri/renderD128 \
 #     --group-add=render \
