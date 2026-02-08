@@ -11,8 +11,6 @@ WORKLIST="/var/lib/sysupdate/containers-to-build.conf"
 REPO_ROOT="${HOME}/git/helheim-containers"
 BUILDER="${REPO_ROOT}/bin/build-container.sh"
 SYSTEMD="${REPO_ROOT}/bin/update-systemd.sh"
-BUILDLOG="${HOME}/build.log"
-echo $(date "+%Y-%m-%d %H:%M") > ${BUILDLOG}
 
 # Nothing to do if the worklist is missing or empty
 if [ ! -s "${WORKLIST}" ]; then
@@ -32,7 +30,7 @@ pushd "${REPO_ROOT}" || exit 1
         echo
         echo "Building container: ${container}"
 
-        if "${BUILDER}" "${container}" >> "${BUILDLOG}"; then
+        if "${BUILDER}" "${container}" | systemd-cat -t helheim-builder -p info; then
             echo "SUCCESS: ${container}"
             # Do NOT add back to TMP_WORKLIST
         else
