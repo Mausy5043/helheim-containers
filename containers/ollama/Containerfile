@@ -4,6 +4,7 @@ USER root
 
 # Install Ollama dependencies
 RUN apt-get update && apt-get install -y \
+    apt-utils \
     curl \
     ca-certificates \
     zstd \
@@ -19,10 +20,8 @@ ENV HIP_VISIBLE_DEVICES=0
 RUN useradd -m -s /bin/bash ollama \
     && chown -R ollama:ollama /home/ollama
 
-USER rocm
-
-# USER ollama
-# WORKDIR /home/ollama
+USER ollama
+WORKDIR /home/ollama
 
 # Expose the Ollama API port
 # EXPOSE 11434

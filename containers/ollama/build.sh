@@ -12,8 +12,11 @@ podman build \
     --file Containerfile \
     .
 
-# 
+#
 # Uncomment for testing:
 # podman run -it --rm  \
+#     --device=/dev/kfd \
+#     --device=/dev/dri/renderD128 \
+#     --group-add=render \
 #     --name ollama \
 #     "${IMAGE_TAG}"
