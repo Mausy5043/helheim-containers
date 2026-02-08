@@ -35,7 +35,7 @@ pushd "${REPO_ROOT}" || exit 1
         echo
         echo "Building container: ${container}"
 
-        if "${BUILDER}" "${container}" | systemd-cat -t helheim-builder -p info; then
+        if "${BUILDER}" "${container}" | systemd-cat -t container-builder -p info; then
             echo "SUCCESS: ${container}"
             # Do NOT add back to TMP_WORKLIST
         else
