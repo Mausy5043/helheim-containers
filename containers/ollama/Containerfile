@@ -1,5 +1,5 @@
 # Use a ROCm-enabled base image
-FROM rocm/rocm-terminal:latest
+FROM docker.io/rocm/rocm-terminal:latest
 
 # Install Ollama dependencies
 RUN apt-get update && apt-get install -y \
