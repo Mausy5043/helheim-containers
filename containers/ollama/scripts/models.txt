@@ -10,5 +10,4 @@ mistral:latest
 wizard-vicuna-uncensored:13b
 dolphin-mixtral:8x7b
 llama3.1:70b
-devstral-small
 devstral-2
