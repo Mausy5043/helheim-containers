@@ -16,7 +16,7 @@ MODEL_LIST=$(curl -s http://127.0.0.1:11434/api/tags \
         *) echo "$NAME $SIZE" ;;
       esac
     done \
-  | sort -k2,2nr \
+  | sort -k2,2n \
   | awk '{print $1}')
 
 if [[ -z "$MODEL_LIST" ]]; then
