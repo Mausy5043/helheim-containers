@@ -10,7 +10,7 @@ podman rm -f "${CONTAINER_NAME}" 2>/dev/null || true
 
 echo "Starting ${CONTAINER_NAME}..."
 
-podman run -d -rm \
+podman run -d --rm \
   --name "${CONTAINER_NAME}" \
   --publish "${PORT}:${PORT}" \
   --volume /srv/containers/ollama:/home/ollama/.ollama:rw,U \
