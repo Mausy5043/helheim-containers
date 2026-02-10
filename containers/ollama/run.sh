@@ -12,7 +12,7 @@ echo "Starting ${CONTAINER_NAME}..."
 
 podman run -d \
   --name "${CONTAINER_NAME}" \
-  --publish "127.0.0.1:${PORT}:${PORT}" \
+  --publish "${PORT}:${PORT}" \
   --volume /srv/containers/ollama:/home/ollama/.ollama:rw,U \
   --device=/dev/kfd \
   --device=/dev/dri/renderD128 \
