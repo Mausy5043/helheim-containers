@@ -26,6 +26,8 @@ RUN groupadd -g 500 ollama \
 USER ollama
 WORKDIR /home/ollama
 ENV PS1="(ollama-rocm) \\u@\\h:\\w\\$ "
+
+ENV OLLAMA_HOST=0.0.0.0:11434
 ENV OLLAMA_MODELS=/home/ollama/.ollama/models
 
 # Expose the Ollama API port
