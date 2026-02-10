@@ -2,23 +2,45 @@
 set -u
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-MODELS_FILE="${1:-${SCRIPT_DIR}/models.txt}"
-PROMPTS_FILE="${2:-${SCRIPT_DIR}/prompts.txt}"
+PROMPTS_FILE="${1:-${SCRIPT_DIR}/prompts.txt}"
 API_URL="${API_URL:-http://127.0.0.1:11434/api/generate}"
 TIMEOUT="${TIMEOUT:-30}"
 WARM_UP_PROMPT="introduce yourself"
 
-if [[ ! -f "$MODELS_FILE" ]]; then
-  echo "Error: Models file not found: $MODELS_FILE" >&2
+# Discover installed models with size, sorted descending
+# Skip embedding models but print a message for each skipped one
+RAW_MODELS=$(ollama list 2>/dev/null | awk 'NR>1 {print $1, $2}')
+
+if [[ -z "$RAW_MODELS" ]]; then
+  echo "Error: No models found via 'ollama list'" >&2
   exit 1
 fi
+
+MODEL_LIST=""
+while read -r NAME SIZE; do
+  [[ -z "$NAME" ]] && continue
+
+  if [[ "$NAME" == *":embed"* ]] || [[ "$NAME" == *"-embed"* ]] || [[ "$NAME" == *"embed"* ]]; then
+    echo "Skipping embedding model: $NAME"
+    continue
+  fi
+
+  MODEL_LIST+="$NAME $SIZE"$'\n'
+done <<< "$RAW_MODELS"
+
+if [[ -z "$MODEL_LIST" ]]; then
+  echo "Error: No non-embedding models available" >&2
+  exit 1
+fi
+
+# Sort by size (column 2, numeric, ascending)
+MODEL_LIST=$(echo "$MODEL_LIST" | sort -k2,2n | awk '{print $1}')
 
 if [[ ! -f "$PROMPTS_FILE" ]]; then
   echo "Error: Prompts file not found: $PROMPTS_FILE" >&2
   exit 1
 fi
 
-# Read prompts separated by blank lines
 mapfile -t PROMPTS < <(awk -v RS= '{gsub(/\n+$/, "", $0); print}' "$PROMPTS_FILE")
 
 if [[ ${#PROMPTS[@]} -eq 0 ]]; then
@@ -26,15 +48,12 @@ if [[ ${#PROMPTS[@]} -eq 0 ]]; then
   exit 1
 fi
 
-# Count actual models (excluding blank lines)
-MODEL_COUNT=$(grep -cv '^\s*$' "$MODELS_FILE" || echo 0)
+MODEL_COUNT=$(echo "$MODEL_LIST" | wc -w | tr -d ' ')
 
 echo "Benchmarking $MODEL_COUNT models across ${#PROMPTS[@]} prompts"
 echo
 
-while IFS= read -r MODEL; do
-  [[ -z "$MODEL" ]] && continue
-
+for MODEL in $MODEL_LIST; do
   echo "==============================="
   echo "MODEL: $MODEL"
   echo "==============================="
@@ -43,18 +62,17 @@ while IFS= read -r MODEL; do
     PROMPT="${PROMPTS[$idx]}"
     echo "--- Prompt $((idx+1)) ---"
 
-    # Warm-up run (not measured)
     WARMUP=$(curl -s --max-time "$TIMEOUT" -w "\n%{http_code}" "$API_URL" \
       -d "$(jq -nc --arg model "$MODEL" --arg prompt "$WARM_UP_PROMPT" \
         '{model:$model, prompt:$prompt, stream:false}')" 2>/dev/null || echo "000")
     WARMUP_HTTP="${WARMUP##*$'\n'}"
     if [[ "$WARMUP_HTTP" != "200" ]]; then
-      echo "  Error: Warm-up failed with HTTP $WARMUP_HTTP" >&2
+      echo "  Error:        Warm-up failed with HTTP $WARMUP_HTTP"
+      echo "  Response was: $WARMUP"
       echo
       continue
     fi
 
-    # Measured run
     RESPONSE=$(curl -s --max-time "$TIMEOUT" -w "\n%{http_code}" "$API_URL" \
       -d "$(jq -nc --arg model "$MODEL" --arg prompt "$PROMPT" \
         '{model:$model, prompt:$prompt, stream:false}')" 2>/dev/null || echo "000")
@@ -62,23 +80,24 @@ while IFS= read -r MODEL; do
     RESULT="${RESPONSE%$'\n'*}"
 
     if [[ "$HTTP_CODE" != "200" ]]; then
-      echo "  Error: Request failed with HTTP $HTTP_CODE" >&2
+      echo "  Error:        Request failed with HTTP $HTTP_CODE"
+      echo "  Response was: $RESPONSE"
       echo
       continue
     fi
 
-    # Validate JSON response
     if ! echo "$RESULT" | jq empty 2>/dev/null; then
-      echo "  Error: Invalid JSON response" >&2
+      echo "  Error:        Invalid JSON response"
+      echo "  Response was: $RESPONSE"
       echo
       continue
     fi
 
-    TOKENS=$(echo "$RESULT" | jq '.eval_count // empty' 2>/dev/null || echo "")
-    DURATION_NS=$(echo "$RESULT" | jq '.eval_duration // empty' 2>/dev/null || echo "")
+    TOKENS=$(echo "$RESULT" | jq '.eval_count // empty')
+    DURATION_NS=$(echo "$RESULT" | jq '.eval_duration // empty')
 
     if [[ -z "$TOKENS" || -z "$DURATION_NS" ]]; then
-      echo "  Error: model did not return timing data" >&2
+      echo "  Error: model did not return timing data"
       echo
       continue
     fi
@@ -100,4 +119,4 @@ while IFS= read -r MODEL; do
   done
 
   echo
-done < "$MODELS_FILE"
+done

@@ -2,21 +2,26 @@
 set -u
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-MODELS_FILE="${1:-${SCRIPT_DIR}/models.txt}"
 PROMPT="Explain strong vs weak consistency in distributed systems in about 300 words."
 WARM_UP_PROMPT="introduce yourself"
 API_URL="${API_URL:-http://127.0.0.1:11434/api/generate}"
 TIMEOUT="${TIMEOUT:-30}"
 
-if [[ ! -f "$MODELS_FILE" ]]; then
-  echo "Error: Models file not found: $MODELS_FILE" >&2
+# Discover installed models
+MODEL_LIST=$(ollama list 2>/dev/null | awk 'NR>1 {print $1}')
+
+if [[ -z "$MODEL_LIST" ]]; then
+  echo "Error: No models found via 'ollama list'" >&2
   exit 1
 fi
 
-echo "Benchmarking models from $MODELS_FILE"
+# Sort by size (column 2, numeric, ascending)
+MODEL_LIST=$(echo "$MODEL_LIST" | sort -k2,2n | awk '{print $1}')
+
+echo "Benchmarking installed models"
 echo
 
-while IFS= read -r MODEL; do
+for MODEL in $MODEL_LIST; do
   [[ -z "$MODEL" ]] && continue
 
   echo "=== $MODEL ==="
@@ -27,7 +32,8 @@ while IFS= read -r MODEL; do
       '{model:$model, prompt:$prompt, stream:false}')" 2>/dev/null || echo "000")
   HTTP_CODE="${WARMUP##*$'\n'}"
   if [[ "$HTTP_CODE" != "200" ]]; then
-    echo "  Error: Warm-up failed with HTTP $HTTP_CODE" >&2
+    echo "  Error:        Warm-up failed with HTTP $HTTP_CODE" >&2
+    echo "  Response was: $WARMUP"
     echo
     continue
   fi
@@ -40,14 +46,15 @@ while IFS= read -r MODEL; do
   RESULT="${RESPONSE%$'\n'*}"
 
   if [[ "$HTTP_CODE" != "200" ]]; then
-    echo "  Error: Request failed with HTTP $HTTP_CODE" >&2
+    echo "  Error:        Request failed with HTTP $HTTP_CODE" >&2
+    echo "  Response was: $RESPONSE"
     echo
     continue
   fi
 
-  # Validate JSON response
   if ! echo "$RESULT" | jq empty 2>/dev/null; then
-    echo "  Error: Invalid JSON response" >&2
+    echo "  Error:        Invalid JSON response" >&2
+    echo "  Response was: $RESPONSE"
     echo
     continue
   fi
@@ -75,4 +82,4 @@ while IFS= read -r MODEL; do
       speed = t / secs
       printf "  Tokens: %d\n  Time: %.3fs\n  Speed: %.2f tokens/s\n\n", t, secs, speed
     }' || true
-done < "$MODELS_FILE"
+done

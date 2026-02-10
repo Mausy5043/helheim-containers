@@ -2,14 +2,13 @@ phi3:mini
 gemma2:2b
 qwen2.5:3b
 gemma3:4b
-mistral:7b
 wizard-vicuna-uncensored:7b
 llama3.1:8b
 llama3.2:latest
 mistral:latest
 wizard-vicuna-uncensored:13b
-qwen2.5:14b
 qwen2.5:7b
+qwen2.5:14b
 mistral:7b
 phi3:14b
 gemma2:27b
@@ -17,3 +16,4 @@ deepseek-r1:8b
 codegemma:7b
 qwen2.5-coder:14b
 dolphin3:8b
+starcoder2:15b
