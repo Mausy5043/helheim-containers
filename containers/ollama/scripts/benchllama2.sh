@@ -9,32 +9,26 @@ WARM_UP_PROMPT="introduce yourself"
 
 # Discover installed models with size, sorted descending
 # Skip embedding models but print a message for each skipped one
-RAW_MODELS=$(ollama list 2>/dev/null | awk 'NR>1 {print $1, $2}')
+MODEL_LIST=$(curl -s http://127.0.0.1:11434/api/tags \
+  | jq -r '.models[] | "\(.name) \(.size)"' \
+  | while read -r NAME SIZE; do
+      case "$NAME" in
+        *embed*|*:embed*) echo "Skipping embedding model: $NAME" >&2 ;;
+        *) echo "$NAME $SIZE" ;;
+      esac
+    done \
+  | sort -k2,2nr \
+  | awk '{print $1}')
 
-if [[ -z "$RAW_MODELS" ]]; then
+if [[ -z "$MODEL_LIST" ]]; then
   echo "Error: No models found via 'ollama list'" >&2
   exit 1
 fi
-
-MODEL_LIST=""
-while read -r NAME SIZE; do
-  [[ -z "$NAME" ]] && continue
-
-  if [[ "$NAME" == *":embed"* ]] || [[ "$NAME" == *"-embed"* ]] || [[ "$NAME" == *"embed"* ]]; then
-    echo "Skipping embedding model: $NAME"
-    continue
-  fi
-
-  MODEL_LIST+="$NAME $SIZE"$'\n'
-done <<< "$RAW_MODELS"
 
 if [[ -z "$MODEL_LIST" ]]; then
   echo "Error: No non-embedding models available" >&2
   exit 1
 fi
-
-# Sort by size (column 2, numeric, ascending)
-MODEL_LIST=$(echo "$MODEL_LIST" | sort -k2,2n | awk '{print $1}')
 
 if [[ ! -f "$PROMPTS_FILE" ]]; then
   echo "Error: Prompts file not found: $PROMPTS_FILE" >&2

@@ -8,15 +8,22 @@ API_URL="${API_URL:-http://127.0.0.1:11434/api/generate}"
 TIMEOUT="${TIMEOUT:-30}"
 
 # Discover installed models
-MODEL_LIST=$(ollama list 2>/dev/null | awk 'NR>1 {print $1}')
+MODEL_LIST=$(curl -s http://127.0.0.1:11434/api/tags \
+  | jq -r '.models[] | "\(.name) \(.size)"' \
+  | while read -r NAME SIZE; do
+      case "$NAME" in
+        *embed*|*:embed*) echo "Skipping embedding model: $NAME" >&2 ;;
+        *) echo "$NAME $SIZE" ;;
+      esac
+    done \
+  | sort -k2,2nr \
+  | awk '{print $1}')
 
 if [[ -z "$MODEL_LIST" ]]; then
   echo "Error: No models found via 'ollama list'" >&2
   exit 1
 fi
 
-# Sort by size (column 2, numeric, ascending)
-MODEL_LIST=$(echo "$MODEL_LIST" | sort -k2,2n | awk '{print $1}')
 
 echo "Benchmarking installed models"
 echo
