@@ -4,6 +4,7 @@ set -u
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 MODELS_FILE="${1:-${SCRIPT_DIR}/models.txt}"
 PROMPT="Explain strong vs weak consistency in distributed systems in about 300 words."
+WARM_UP_PROMPT="introduce yourself"
 API_URL="${API_URL:-http://127.0.0.1:11434/api/generate}"
 TIMEOUT="${TIMEOUT:-30}"
 
@@ -22,7 +23,7 @@ while IFS= read -r MODEL; do
 
   # Warm-up run (not measured)
   WARMUP=$(curl -s --max-time "$TIMEOUT" -w "\n%{http_code}" "$API_URL" \
-    -d "$(jq -nc --arg model "$MODEL" --arg prompt "$PROMPT" \
+    -d "$(jq -nc --arg model "$MODEL" --arg prompt "$WARM_UP_PROMPT" \
       '{model:$model, prompt:$prompt, stream:false}')" 2>/dev/null || echo "000")
   HTTP_CODE="${WARMUP##*$'\n'}"
   if [[ "$HTTP_CODE" != "200" ]]; then

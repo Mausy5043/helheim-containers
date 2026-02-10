@@ -6,7 +6,7 @@ MODELS_FILE="${1:-${SCRIPT_DIR}/models.txt}"
 PROMPTS_FILE="${2:-${SCRIPT_DIR}/prompts.txt}"
 API_URL="${API_URL:-http://127.0.0.1:11434/api/generate}"
 TIMEOUT="${TIMEOUT:-30}"
-WARM_UP_PROMPT="Hello."
+WARM_UP_PROMPT="introduce yourself"
 
 if [[ ! -f "$MODELS_FILE" ]]; then
   echo "Error: Models file not found: $MODELS_FILE" >&2

@@ -8,6 +8,3 @@ llama3.1:8b
 llama3.2:latest
 mistral:latest
 wizard-vicuna-uncensored:13b
-dolphin-mixtral:8x7b
-llama3.1:70b
-devstral-2
