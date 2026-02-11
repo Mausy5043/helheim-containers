@@ -60,13 +60,15 @@ for MODEL in $MODEL_LIST; do
   echo "MODEL: $MODEL"
   echo "==============================="
 
+    echo "Warming up..."
     WARMUP=$(curl -s --max-time "$TIMEOUT" -w "\n%{http_code}" "$API_URL" \
         -d "$(jq -nc --arg model "$MODEL" --arg prompt "$WARM_UP_PROMPT" \
         '{model:$model, prompt:$prompt, stream:false}')" 2>/dev/null || echo "000")
+    echo "$WARMUP"
+    echo
     WARMUP_HTTP="${WARMUP##*$'\n'}"
     if [[ "$WARMUP_HTTP" != "200" ]]; then
         echo "  Error:        Warm-up failed with HTTP $WARMUP_HTTP"
-        echo "  Response was: $WARMUP"
         echo
         continue
     fi
@@ -74,6 +76,7 @@ for MODEL in $MODEL_LIST; do
   for idx in "${!PROMPTS[@]}"; do
     PROMPT="${PROMPTS[$idx]}"
     echo "--- Prompt $((idx+1)) ---"
+
 
     RESPONSE=$(curl -s --max-time "$TIMEOUT" -w "\n%{http_code}" "$API_URL" \
       -d "$(jq -nc --arg model "$MODEL" --arg prompt "$PROMPT" \
