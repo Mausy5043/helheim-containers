@@ -35,7 +35,15 @@ if [[ ! -f "$PROMPTS_FILE" ]]; then
   exit 1
 fi
 
-mapfile -t PROMPTS < <(awk -v RS= '{gsub(/\n+$/, "", $0); print}' "$PROMPTS_FILE")
+# mapfile -t PROMPTS < <(awk -v RS= '{gsub(/\n+$/, "", $0); print}' "$PROMPTS_FILE")
+mapfile -t PROMPTS < <(
+  awk '
+    BEGIN { RS="===PROMPT==="; ORS="" }
+    NF { gsub(/^[ \t\r\n]+|[ \t\r\n]+$/, "", $0); print $0 "\n---END---\n" }
+  ' "$PROMPTS_FILE" |
+  awk -v RS="---END---" 'NF {print}'
+)
+
 
 if [[ ${#PROMPTS[@]} -eq 0 ]]; then
   echo "Error: No prompts found in $PROMPTS_FILE" >&2
@@ -52,20 +60,20 @@ for MODEL in $MODEL_LIST; do
   echo "MODEL: $MODEL"
   echo "==============================="
 
-  for idx in "${!PROMPTS[@]}"; do
-    PROMPT="${PROMPTS[$idx]}"
-    echo "--- Prompt $((idx+1)) ---"
-
     WARMUP=$(curl -s --max-time "$TIMEOUT" -w "\n%{http_code}" "$API_URL" \
-      -d "$(jq -nc --arg model "$MODEL" --arg prompt "$WARM_UP_PROMPT" \
+        -d "$(jq -nc --arg model "$MODEL" --arg prompt "$WARM_UP_PROMPT" \
         '{model:$model, prompt:$prompt, stream:false}')" 2>/dev/null || echo "000")
     WARMUP_HTTP="${WARMUP##*$'\n'}"
     if [[ "$WARMUP_HTTP" != "200" ]]; then
-      echo "  Error:        Warm-up failed with HTTP $WARMUP_HTTP"
-      echo "  Response was: $WARMUP"
-      echo
-      continue
+        echo "  Error:        Warm-up failed with HTTP $WARMUP_HTTP"
+        echo "  Response was: $WARMUP"
+        echo
+        continue
     fi
+
+  for idx in "${!PROMPTS[@]}"; do
+    PROMPT="${PROMPTS[$idx]}"
+    echo "--- Prompt $((idx+1)) ---"
 
     RESPONSE=$(curl -s --max-time "$TIMEOUT" -w "\n%{http_code}" "$API_URL" \
       -d "$(jq -nc --arg model "$MODEL" --arg prompt "$PROMPT" \
