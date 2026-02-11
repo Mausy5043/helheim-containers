@@ -5,7 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROMPT="Explain strong vs weak consistency in distributed systems in about 300 words."
 WARM_UP_PROMPT="introduce yourself"
 API_URL="${API_URL:-http://127.0.0.1:11434/api/generate}"
-TIMEOUT="${TIMEOUT:-30}"
+TIMEOUT="${TIMEOUT:-120}"
 
 # Discover installed models
 MODEL_LIST=$(curl -s http://127.0.0.1:11434/api/tags \
@@ -36,7 +36,7 @@ for MODEL in $MODEL_LIST; do
   # Warm-up run (not measured)
   WARMUP=$(curl -s --max-time "$TIMEOUT" -w "\n%{http_code}" "$API_URL" \
     -d "$(jq -nc --arg model "$MODEL" --arg prompt "$WARM_UP_PROMPT" \
-      '{model:$model, prompt:$prompt, stream:false}')" 2>/dev/null || echo "000")
+      '{model:$model, prompt:$prompt, stream:false}')" || echo "000")
   HTTP_CODE="${WARMUP##*$'\n'}"
   if [[ "$HTTP_CODE" != "200" ]]; then
     echo "  Error:        Warm-up failed with HTTP $HTTP_CODE" >&2
@@ -48,7 +48,7 @@ for MODEL in $MODEL_LIST; do
   # Measured run
   RESPONSE=$(curl -s --max-time "$TIMEOUT" -w "\n%{http_code}" "$API_URL" \
     -d "$(jq -nc --arg model "$MODEL" --arg prompt "$PROMPT" \
-      '{model:$model, prompt:$prompt, stream:false}')" 2>/dev/null || echo "000")
+      '{model:$model, prompt:$prompt, stream:false}')" || echo "000")
   HTTP_CODE="${RESPONSE##*$'\n'}"
   RESULT="${RESPONSE%$'\n'*}"
 
