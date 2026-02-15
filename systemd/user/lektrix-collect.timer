@@ -4,8 +4,8 @@
 Description=collecting electricity data (timer)
 
 [Timer]
-OnCalendar=*-*-* *:13,28,43,58
-AccuracySec=1m
+OnCalendar=*-*-* *:12,27,42,57
+AccuracySec=10s
 
 [Install]
 WantedBy=timers.target
