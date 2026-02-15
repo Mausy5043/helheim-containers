@@ -9,16 +9,16 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         bc \
         curl \
+        g++ \
         git \
         nano \
         pkg-config \
         sqlite3 \
         tree \
+        libffi-dev \
         liblapack3 \
         libopenblas0 \
-        libsqlite3-0 \
-        g++ \
-        libffi-dev && \
+        libsqlite3-0 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     python -m pip install --no-cache-dir --root-user-action ignore --upgrade pip
