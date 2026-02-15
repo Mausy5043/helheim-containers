@@ -1,7 +1,10 @@
 # Containerfile for lektrix/collect:latest
-FROM python:3.12-slim
+# Changed from 3.12 to 3.13
+FROM python:3.13-slim
 
 # Install system operational & build dependencies
+# Note: Added 'g++' and 'libffi-dev' which are sometimes required for
+# compiling older pins (like pyarrow) on newer Python versions.
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         bc \
@@ -13,7 +16,9 @@ RUN apt-get update && \
         tree \
         liblapack3 \
         libopenblas0 \
-        libsqlite3-0 && \
+        libsqlite3-0 \
+        g++ \
+        libffi-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     python -m pip install --no-cache-dir --root-user-action ignore --upgrade pip
@@ -22,12 +27,13 @@ RUN apt-get update && \
 WORKDIR /app
 
 # Copy requirements from host into container
-# (host path: /home/beheer/git/lektrix/requirements.txt)
 # use build parameter: --build-context lektrix=/home/beheer/git/lektrix
 COPY --from=lektrix requirements.txt /app/requirements.txt
 
 # Install Python dependencies
+# If pyarrow <= 20.0.0 fails to find a 'wheel', it will attempt to compile.
+# The system dependencies added above will help this succeed.
 RUN pip install --no-cache-dir --root-user-action ignore -r /app/requirements.txt
 
-# Default command: open a shell (scripts are mounted at runtime)
+# Default command: open a shell
 CMD ["bash"]
