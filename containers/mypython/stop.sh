@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -eu
 
-IMAGE_TAG="mypython"
 CONTAINER_NAME="mypython"
 
 echo "Stopping ${CONTAINER_NAME}..."
