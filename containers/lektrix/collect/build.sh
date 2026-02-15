@@ -13,6 +13,17 @@ podman build \
     --file Containerfile \
     .
 
+echo
+podman run \
+       --rm \
+       lektrix/collect:latest \
+       python3 -c "import pyarrow;
+print('PyArrow version:', pyarrow.__version__);
+import pandas;
+print('Pandas version:', pandas.__version__);
+import numpy;
+print('Numpy version:', numpy.__version__)"
+
 printf "\nYou can now enable/start the lektrix-collect.service to run this container.\n\n"
 
 exit 0
