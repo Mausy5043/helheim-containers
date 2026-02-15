@@ -1,0 +1,6 @@
+# pip requirements
+
+mausy5043-common
+requests
+pandas
+numpy
