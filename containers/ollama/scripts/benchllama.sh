@@ -2,7 +2,7 @@
 set -u
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROMPT="Explain strong vs weak consistency in distributed systems in about 300 words."
+PROMPT="Write a Python function that takes a list of integers and returns all prime numbers. Include docstrings and unittests."
 WARM_UP_PROMPT="introduce yourself"
 API_URL="${API_URL:-http://127.0.0.1:11434/api/generate}"
 TIMEOUT="${TIMEOUT:-120}"
