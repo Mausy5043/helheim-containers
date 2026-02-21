@@ -6,6 +6,8 @@ CONTAINER_NAME="ollama-test"
 PORT=11434
 
 echo "Boarding ${CONTAINER_NAME}..."
+# clear the cache first
+sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'
 podman exec -it "${CONTAINER_NAME}" /bin/bash 2>/dev/null || true
 
 echo "Ollama is deboarded"
