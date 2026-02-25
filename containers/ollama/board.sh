@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -eu
 
-IMAGE_TAG="ollama:testing"
-CONTAINER_NAME="ollama-test"
+IMAGE_TAG="ollama:latest"
+CONTAINER_NAME="ollama"
 PORT=11434
 
 echo "Boarding ${CONTAINER_NAME}..."
