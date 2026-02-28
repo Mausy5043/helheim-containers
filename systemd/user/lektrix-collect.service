@@ -12,6 +12,8 @@ ExecStartPre=/usr/bin/podman rm -f lektrix-collect
 ExecStart=/usr/bin/podman run \
     --name lektrix-collect \
     --rm \
+    --network=slirp4netns:allow_host_loopback=true \
+    --dns=192.168.2.2 \
     --volume /etc/localtime:/etc/localtime:ro \
     --volume /home/beheer/git/lektrix/bin:/app/scripts:ro \
     --volume /srv/containers/lektrix/data:/app/data:rw \
@@ -21,8 +23,6 @@ ExecStart=/usr/bin/podman run \
     /app/scripts/collect.sh
 Restart=no
 
-#    --network=slirp4netns:allow_host_loopback=true \
-#    --dns=192.168.2.2 \
 
 Type=simple
 TimeoutStartSec=270
