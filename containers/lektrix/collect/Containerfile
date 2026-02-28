@@ -1,24 +1,26 @@
 # Containerfile for lektrix/collect:latest
-# Changed from 3.12 to 3.13
-FROM python:3.13-slim
+FROM python:3.14
 
 # Install system operational & build dependencies
-# Note: Added 'g++' and 'libffi-dev' which are sometimes required for
-# compiling older pins (like pyarrow) on newer Python versions.
 RUN apt-get update && \
     apt-get install -yqq --no-install-recommends \
         bc \
         curl \
         g++ \
         git \
+        iputils-ping \
         nano \
         pkg-config \
         sqlite3 \
         tree \
         libffi-dev \
+        libfreetype6 \
         liblapack3 \
+        liblz4-1 \
         libopenblas0 \
-        libsqlite3-0 && \
+        libpng16-16t64 \
+        libsqlite3-0 \
+        libzstd1 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     python -m pip install --no-cache-dir --root-user-action ignore --upgrade pip
@@ -36,4 +38,4 @@ COPY --from=lektrix requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir --root-user-action ignore -r /app/requirements.txt
 
 # Default command: open a shell
-CMD ["bash"]
+CMD ["/bin/bash"]
