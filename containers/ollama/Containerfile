@@ -4,11 +4,13 @@ FROM docker.io/rocm/rocm-terminal:latest
 USER root
 
 # Install Ollama dependencies
-RUN apt-get update && apt-get install -y \
-    apt-utils \
-    curl \
-    ca-certificates \
-    zstd \
+RUN apt-get update && \
+    apt-get install -yqq \
+        apt-utils \
+        curl \
+        ca-certificates \
+        zstd && \
+    apt-get clean && \
     && rm -rf /var/lib/apt/lists/*
 
 # create the `render` group which is needed for ROCm

@@ -3,7 +3,7 @@ FROM python:3.13-slim
 
 # Install system operational & build dependencies
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+    apt-get install -yqq --no-install-recommends \
         bc \
         bzip2 \
         curl \
