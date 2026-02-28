@@ -1,6 +1,15 @@
 # pip requirements
 
+gracefulkiller
+matplotlib
 mausy5043-common
-requests
-pandas
 numpy
+pandas
+py-solaredge
+pyarrow
+python-dateutil
+pytz
+requests
+sh
+tabulate
+zeroconf
