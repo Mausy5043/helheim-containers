@@ -1,5 +1,5 @@
 # Containerfile for lektrix/collect:latest
-FROM python:3.14
+FROM python:3.13
 
 # Install system operational & build dependencies
 RUN apt-get update && \
