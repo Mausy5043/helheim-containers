@@ -8,9 +8,9 @@ podman rm -f "${CONTAINER_NAME}" 2>/dev/null || true
 
 echo "Boarding ${CONTAINER_NAME}..."
 
-podman run -d --rm \
+podman run -d -it --rm \
   --name "${CONTAINER_NAME}" \
   --volume /etc/localtime:/etc/localtime:ro \
-  "${IMAGE_TAG}"
+  "${CONTAINER_NAME}"
 
 echo "${CONTAINER_NAME} is deboarded"
