@@ -1,5 +1,7 @@
 FROM python:3.13
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Install system operational & build dependencies
 RUN apt-get update && \
     apt-get install -yqq --no-install-recommends \
