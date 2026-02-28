@@ -7,6 +7,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Install Ollama dependencies
 RUN apt-get update && \
+    apt-get install -yqq --no-install-recommends \
+        apt-utils && \
     apt-get install -yqq \
         apt-utils \
         curl \

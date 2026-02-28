@@ -6,6 +6,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Install system operational & build dependencies
 RUN apt-get update && \
     apt-get install -yqq --no-install-recommends \
+        apt-utils && \
+    apt-get install -yqq --no-install-recommends \
         bc \
         bzip2 \
         curl \
