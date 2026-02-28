@@ -46,6 +46,3 @@ VOLUME /home/ollama/.ollama
 
 # Entrypoint to start Ollama
 ENTRYPOINT ["ollama", "serve"]
-
-# Entrypoint to shell for testing
-# ENTRYPOINT ["/bin/bash"]
