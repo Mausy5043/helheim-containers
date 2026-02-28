@@ -8,7 +8,7 @@ podman rm -f "${CONTAINER_NAME}" 2>/dev/null || true
 
 echo "Boarding ${CONTAINER_NAME}..."
 
-podman run -d -it --rm \
+podman run -it --rm \
   --name "${CONTAINER_NAME}" \
   --volume /etc/localtime:/etc/localtime:ro \
   "${CONTAINER_NAME}"
