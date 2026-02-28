@@ -1,0 +1,45 @@
+# Containerfile for lektrix/collect:latest
+FROM python:3.13-slim
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install system operational & build dependencies
+RUN apt-get update && \
+    apt-get install -yqq --no-install-recommends \
+        apt-utils && \
+    apt-get install -yqq --no-install-recommends \
+        bc \
+        curl \
+        g++ \
+        git \
+        iputils-ping \
+        nano \
+        pkg-config \
+        sqlite3 \
+        tree \
+        libffi-dev \
+        libfreetype6 \
+        liblapack3 \
+        liblz4-1 \
+        libopenblas0 \
+        libpng16-16t64 \
+        libsqlite3-0 \
+        libzstd1 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    python -m pip install --no-cache-dir --root-user-action ignore --upgrade pip
+
+# Create working directory
+WORKDIR /app
+
+# Copy requirements from host into container
+# use build parameter: --build-context lektrix=/home/beheer/git/lektrix
+COPY --from=lektrix requirements.txt /app/requirements.txt
+
+# Install Python dependencies
+# If pyarrow <= 20.0.0 fails to find a 'wheel', it will attempt to compile.
+# The system dependencies added above will help this succeed.
+RUN pip install --no-cache-dir --root-user-action ignore -r /app/requirements.txt
+
+# Default command: open a shell
+CMD ["/bin/bash"]

@@ -1,0 +1,33 @@
+# This service is for periodically collecting the electricity data
+
+[Unit]
+Description=collecting electricity data (service)
+Wants=lektrix-collect4.timer
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+# Excecute the hourly trending script inside a rootless Podman container
+ExecStartPre=/usr/bin/podman rm -f lektrix4-collect
+ExecStart=/usr/bin/podman run \
+    --name lektrix-collect4 \
+    --rm \
+    --network=slirp4netns:allow_host_loopback=true \
+    --dns=192.168.2.2 \
+    --volume /etc/localtime:/etc/localtime:ro \
+    --volume /home/beheer/git/lektrix/bin:/app/scripts:ro \
+    --volume /srv/containers/lektrix/data:/app/data:rw \
+    --volume /srv/containers/lektrix/config:/app/config:ro \
+    --volume /srv/containers/lektrix/www:/app/www:rw \
+    lektrix/collect4:latest \
+    /app/scripts/collect4.sh
+Restart=no
+
+
+Type=simple
+TimeoutStartSec=270
+TimeoutStopSec=30
+# StandardOutput=journal
+# StandardError=journal
+StandardOutput=null
+StandardError=null
