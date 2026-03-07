@@ -2,7 +2,7 @@
 set -eu
 
 IMAGE_TAG="lektrix/collect4:latest"
-CONTAINER_NAME="lektrix/collect4"
+CONTAINER_NAME="lektrix_collect4"
 
 
 echo "Boarding ${CONTAINER_NAME}..."

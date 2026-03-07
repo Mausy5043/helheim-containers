@@ -2,7 +2,7 @@
 set -eu
 
 IMAGE_TAG="lektrix/collect6:latest"
-CONTAINER_NAME="lektrix/collect6"
+CONTAINER_NAME="lektrix_collect6"
 
 echo "Boarding ${CONTAINER_NAME}..."
 podman run -it --rm  \
