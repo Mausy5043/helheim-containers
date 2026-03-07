@@ -8,7 +8,7 @@ IMAGE_TAG="mypython"
 echo "Building ${IMAGE_TAG}..."
 podman build \
     --tag "${IMAGE_TAG}" \
-    --pull=true \
+    --pull=newer \
     --build-context app=. \
     --file Containerfile \
     .
