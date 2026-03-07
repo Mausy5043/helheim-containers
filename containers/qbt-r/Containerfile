@@ -43,7 +43,10 @@ WORKDIR /tmp
 RUN git -c advice.detachedHead=false clone --branch v${LIBTORRENT_VERSION} https://github.com/arvidn/libtorrent.git && \
     cd libtorrent && \
     git submodule update --init --recursive && \
-    cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local && \
+    cmake -B build \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_INSTALL_PREFIX=/usr/local \
+          -Wno-dev && \
     cmake --build build -j$(nproc) && \
     cmake --install build
 
@@ -54,9 +57,10 @@ RUN git -c advice.detachedHead=false clone --branch v${LIBTORRENT_VERSION} https
 RUN git -c advice.detachedHead=false clone --branch release-${QBITTORRENT_VERSION} --depth=1 https://github.com/qbittorrent/qBittorrent.git && \
     cd qBittorrent && \
     cmake -B build \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DGUI=OFF \
-    -DCMAKE_INSTALL_PREFIX=/usr/local && \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DGUI=OFF \
+          -DCMAKE_INSTALL_PREFIX=/usr/local \
+          -Wno-dev && \
     cmake --build build -j$(nproc) && \
     cmake --install build
 
