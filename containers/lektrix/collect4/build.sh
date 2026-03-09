@@ -4,6 +4,7 @@ set -eu
 cd "$(dirname "$0")"
 
 IMAGE_TAG="lektrix/collect4:latest"
+CONTAINER_NAME="lektrix_collect4"
 
 echo "Building ${IMAGE_TAG}..."
 podman build \
@@ -16,7 +17,8 @@ podman build \
 echo
 podman run \
        --rm \
-       lektrix/collect4:latest \
+       --name $CONTAINER_NAME \
+       "${IMAGE_TAG}" \
        python3 -c "import pyarrow;
 print('PyArrow version:', pyarrow.__version__);
 import pandas;
