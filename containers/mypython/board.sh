@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -eu
 
+IMAGE_TAG="mypython"
 CONTAINER_NAME="mypython"
 
 # Stop and remove any existing container
@@ -11,6 +12,6 @@ echo "Boarding ${CONTAINER_NAME}..."
 podman run -it --rm \
   --name "${CONTAINER_NAME}" \
   --volume /etc/localtime:/etc/localtime:ro \
-  "${CONTAINER_NAME}"
+  "${IMAGE_TAG}"
 
 echo "${CONTAINER_NAME} is deboarded"

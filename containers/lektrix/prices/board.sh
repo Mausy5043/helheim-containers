@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -eu
 
-IMAGE_TAG="lektrix/collect6:latest"
-CONTAINER_NAME="lektrix_collect6"
+IMAGE_TAG="lektrix/prices:latest"
+CONTAINER_NAME="lektrix_prices"
 
 echo "Boarding ${CONTAINER_NAME}..."
 
@@ -21,6 +21,5 @@ podman run -it --rm  \
 
 #    --network=slirp4netns:allow_host_loopback=true \
 #    --dns=192.168.2.2 \
-
 
 echo "${CONTAINER_NAME} is deboarded"

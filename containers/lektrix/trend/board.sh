@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -eu
 
-IMAGE_TAG="lektrix/collect6:latest"
-CONTAINER_NAME="lektrix_collect6"
+IMAGE_TAG="lektrix/trend:latest"
+CONTAINER_NAME="lektrix_trend"
 
 echo "Boarding ${CONTAINER_NAME}..."
 
@@ -12,9 +12,8 @@ podman rm -f "${CONTAINER_NAME}" 2>/dev/null || true
 podman run -it --rm  \
     --name "${CONTAINER_NAME}" \
     --volume /etc/localtime:/etc/localtime:ro \
-    --volume /home/beheer/git/lektrix/bin:/app/scripts:rw \
+    --volume /home/beheer/git/lektrix/bin:/app/scripts:ro \
     --volume /srv/containers/lektrix/data:/app/data:rw \
-    --volume /srv/containers/lektrix/config:/app/config:rw \
     --volume /srv/containers/lektrix/www:/app/www:rw \
     "${IMAGE_TAG}" \
     /bin/bash
