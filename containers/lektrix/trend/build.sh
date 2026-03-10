@@ -19,7 +19,6 @@ podman run \
        --rm \
        --name $CONTAINER_NAME \
        "${IMAGE_TAG}" \
-       lektrix/collect:latest \
        python3 -c "import pyarrow;
 print('PyArrow version:', pyarrow.__version__);
 import pandas;
