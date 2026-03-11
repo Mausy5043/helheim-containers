@@ -14,5 +14,3 @@ EXPOSE 53/udp
 # HTTP / HTTPS
 EXPOSE 80/tcp
 EXPOSE 443/tcp
-
-# Declare volumes for persistent

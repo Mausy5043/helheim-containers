@@ -1,5 +1,6 @@
 # Containerfile for lektrix/web:latest
-FROM debian:stable-slim
+FROM debian:stable
+#-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
 
