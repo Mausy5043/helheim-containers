@@ -15,5 +15,4 @@ EXPOSE 53/udp
 EXPOSE 80/tcp
 EXPOSE 443/tcp
 
-# Declare volumes for persistent data
-#VOLUME ["/etc/pihole", "/etc/dnsmasq.d"]
+# Declare volumes for persistent

@@ -3,18 +3,13 @@ set -eu
 
 cd "$(dirname "$0")"
 
-CONTAINER_NAME="lektrix_web"
+CONTAINER_NAME="pihole"
 TAG="helheim"
 IMAGE_TAG="${CONTAINER_NAME}:${TAG}"
 
 echo "Building ${IMAGE_TAG}..."
-
 podman build \
-    --tag "${IMAGE_TAG}"  \
+    --tag "${IMAGE_TAG}" \
     --pull=newer \
     --file Containerfile \
     .
-
-cp -rv ./config/* /srv/containers/lektrix/config
-
-printf "\nYou can now enable/start the lektrix-web.service to run this container.\n\n"

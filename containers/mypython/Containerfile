@@ -39,7 +39,7 @@ COPY --from=app requirements.txt /app/requirements.txt
 # Install Python dependencies
 # If pyarrow <= 20.0.0 fails to find a 'wheel', it will attempt to compile.
 # The system dependencies added above will help this succeed.
-RUN pip install --no-cache-dir --root-user-action ignore -r /app/requirements.txt
+RUN python -m pip install --no-cache-dir --root-user-action ignore -r /app/requirements.txt
 
 # Entrypoint to start
 ENTRYPOINT ["/bin/bash"]

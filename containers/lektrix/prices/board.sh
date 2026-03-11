@@ -20,7 +20,4 @@ podman run -it --rm  \
     "${IMAGE_TAG}" \
     /bin/bash
 
-#    --network=slirp4netns:allow_host_loopback=true \
-#    --dns=192.168.2.2 \
-
 echo "${CONTAINER_NAME} is deboarded"

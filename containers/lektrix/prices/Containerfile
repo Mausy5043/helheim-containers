@@ -32,6 +32,10 @@ RUN apt-get update && \
 # Create working directory
 WORKDIR /app
 
+RUN mkdir -p /app/config
+RUN mkdir -p /app/data
+RUN mkdir -p /app/scripts
+
 # Copy requirements from host into container
 # (host path: /home/beheer/git/lektrix/requirements.txt)
 # use build parameter: --build-context lektrix=/home/beheer/git/lektrix
@@ -40,7 +44,7 @@ COPY --from=lektrix requirements.txt /app/requirements.txt
 # Install Python dependencies
 # If pyarrow <= 20.0.0 fails to find a 'wheel', it will attempt to compile.
 # The system dependencies added above will help this succeed.
-RUN pip install --no-cache-dir --root-user-action ignore -r /app/requirements.txt
+RUN python -m pip install --no-cache-dir --root-user-action ignore -r /app/requirements.txt
 
 # Default command: open a shell
 CMD ["/bin/bash"]

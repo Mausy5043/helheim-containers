@@ -8,16 +8,16 @@ Wants=network-online.target
 After=network-online.target
 
 [Service]
-ExecStartPre=/usr/bin/podman rm -f lektrix-trend-cp 2>/dev/null || true
+ExecStartPre=/usr/bin/podman rm -f lektrix_trend_cp 2>/dev/null || true
 # Execute the hourly trending script inside a rootless Podman container
 ExecStart=/usr/bin/podman run \
-    --name lektrix-trend-cp \
+    --name lektrix_trend_cp \
     --rm \
     --volume /etc/localtime:/etc/localtime:ro \
-    --volume /home/beheer/git/lektrix/bin:/app/scripts:ro \
     --volume /srv/containers/lektrix/data:/app/data:rw \
+    --volume /home/beheer/git/lektrix/bin:/app/scripts:ro \
     --volume /srv/containers/lektrix/www:/app/www:rw \
-    lektrix/trend:latest \
+    lektrix_trend:helheim \
     /app/scripts/hourly.sh -maintenance
 
 # Rootless Podman best practices

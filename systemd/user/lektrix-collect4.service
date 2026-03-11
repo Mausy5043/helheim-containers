@@ -8,18 +8,18 @@ After=network-online.target
 
 [Service]
 # Excecute the hourly trending script inside a rootless Podman container
-ExecStartPre=/usr/bin/podman rm -f lektrix4-collect
+ExecStartPre=/usr/bin/podman rm -f lektrix_collect4
 ExecStart=/usr/bin/podman run \
-    --name lektrix-collect4 \
+    --name lektrix_collect4 \
     --rm \
     --network=slirp4netns:allow_host_loopback=true \
     --dns=192.168.2.2 \
     --volume /etc/localtime:/etc/localtime:ro \
-    --volume /home/beheer/git/lektrix/bin:/app/scripts:ro \
-    --volume /srv/containers/lektrix/data:/app/data:rw \
     --volume /srv/containers/lektrix/config:/app/config:ro \
+    --volume /srv/containers/lektrix/data:/app/data:rw \
+    --volume /home/beheer/git/lektrix/bin:/app/scripts:ro \
     --volume /srv/containers/lektrix/www:/app/www:rw \
-    lektrix/collect4:latest \
+    lektrix_collect4:helheim \
     /app/scripts/collect4.sh
 Restart=no
 

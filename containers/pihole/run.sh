@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 set -eu
 
-CONTAINER_NAME="ollama"
+CONTAINER_NAME="pihole"
 TAG="helheim"
 IMAGE_TAG="${CONTAINER_NAME}:${TAG}"
-
-PORT=11434
 
 # Stop and remove any existing test container
 podman rm -f "${CONTAINER_NAME}" 2>/dev/null || true
@@ -14,12 +12,12 @@ echo "Starting ${CONTAINER_NAME}..."
 
 podman run -d --rm \
   --name "${CONTAINER_NAME}" \
-  --publish "${PORT}:${PORT}" \
+  --publish "53:53" \
+  --publish "28080:80" \
+  --publish "28081:443" \
   --volume /etc/localtime:/etc/localtime:ro \
-  --volume /srv/containers/ollama:/home/ollama/.ollama:rw,U \
-  --device=/dev/kfd \
-  --device=/dev/dri/renderD128 \
-  --group-add=render \
+  --volume /srv/containers/pihole/etc:/etc/pihole:rw,U \
+  --volume /srv/containers/pihole/dnsmasq:/etc/dnsmasq.d:rw,U \
   "${IMAGE_TAG}"
 
 echo "${CONTAINER_NAME} is starting on http://127.0.0.1:${PORT}"

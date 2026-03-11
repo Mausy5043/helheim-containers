@@ -5,18 +5,18 @@ After=network-online.target
 
 [Service]
 # Always recreate the container to avoid stale state
-ExecStartPre=/usr/bin/podman rm -f lektrix-web 2>/dev/null || true
+ExecStartPre=/usr/bin/podman rm -f lektrix_web 2>/dev/null || true
 
 ExecStart=/usr/bin/podman run \
-    --name lektrix-web \
+    --name lektrix_web \
     --rm \
     --publish 18080:80 \
     --volume /etc/localtime:/etc/localtime:ro \
-    --volume /srv/containers/lektrix/www:/var/www/html:ro \
     --volume /srv/containers/lektrix/config/lighttpd.conf:/etc/lighttpd/lighttpd.conf:ro \
-      lektrix/web:latest
+    --volume /srv/containers/lektrix/www:/var/www/html:ro \
+      lektrix_web:helheim
 
-ExecStop=/usr/bin/podman stop lektrix-web
+ExecStop=/usr/bin/podman stop lektrix_web
 StandardOutput=null
 StandardError=null
 Restart=on-failure

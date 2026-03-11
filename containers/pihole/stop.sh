@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eu
 
-CONTAINER_NAME="ollama"
+CONTAINER_NAME="pihole"
 TAG="helheim"
 IMAGE_TAG="${CONTAINER_NAME}:${TAG}"
 

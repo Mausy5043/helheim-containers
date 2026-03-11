@@ -10,7 +10,6 @@ RUN apt-get update && \
     apt-get install -yqq --no-install-recommends \
         apt-utils && \
     apt-get install -yqq \
-        apt-utils \
         curl \
         ca-certificates \
         zstd && \
@@ -46,9 +45,6 @@ ENV GPU_ARCH=gfx1102
 EXPOSE 11434
 
 RUN mkdir -p /home/ollama/.ollama
-
-# Volume for model storage (persistent across container restarts)
-#VOLUME ["/home/ollama/.ollama"]
 
 # Entrypoint to start Ollama
 ENTRYPOINT ["ollama", "serve"]

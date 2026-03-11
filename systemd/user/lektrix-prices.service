@@ -10,16 +10,16 @@ After=network-online.target
 # Type=oneshot
 
 [Service]
-ExecStartPre=/usr/bin/podman rm -f lektrix-prices 2>/dev/null || true
+ExecStartPre=/usr/bin/podman rm -f lektrix_prices 2>/dev/null || true
 # Excecute the hourly trending script inside a rootless Podman container
 ExecStart=/usr/bin/podman run \
-    --name lektrix-prices \
+    --name lektrix_prices \
     --rm \
     --volume /etc/localtime:/etc/localtime:ro \
-    --volume /home/beheer/git/lektrix/bin:/app/scripts:ro \
-    --volume /srv/containers/lektrix/data:/app/data:rw \
     --volume /srv/containers/lektrix/config:/app/config:ro \
-    lektrix/prices:latest \
+    --volume /srv/containers/lektrix/data:/app/data:rw \
+    --volume /home/beheer/git/lektrix/bin:/app/scripts:ro \
+    lektrix_prices:helheim \
     /app/scripts/prices.py
 
 # Rootless Podman best practices
