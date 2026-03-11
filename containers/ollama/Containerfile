@@ -24,9 +24,10 @@ RUN curl -fsSL https://ollama.ai/install.sh | sh
 
 # Create a non-root user and group
 # Create ollama group and user with fixed UID/GID
-RUN groupadd -g 500 ollama \
-    && useradd -u 500 -g 500 -m -s /bin/bash ollama \
-    && chown -R ollama:ollama /home/ollama
+RUN groupadd -g 500 ollama && \
+    useradd -u 500 -g 500 -m -s /bin/bash ollama && \
+    usermod -aG render ollama && \
+    chown -R ollama:ollama /home/ollama
 
 USER ollama
 WORKDIR /home/ollama
