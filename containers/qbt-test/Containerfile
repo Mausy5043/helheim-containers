@@ -106,7 +106,7 @@ RUN echo "/usr/local/lib" > /etc/ld.so.conf.d/usr-local-lib.conf && \
 RUN mkdir -p /qbt-test/config /qbt-test/downloads /qbt-test/incomplete /qbt-test/monitor
 
 # use VOLUME here
-VOLUME ["/qbt-test/config", "/qbt-test/downloads", "/qbt-test/incomplete", "/qbt-test/monitor"]
+#VOLUME ["/qbt-test/config", "/qbt-test/downloads", "/qbt-test/incomplete", "/qbt-test/monitor"]
 
 EXPOSE 1340/tcp
 

@@ -1,0 +1,19 @@
+FROM docker.io/pihole/pihole:latest
+
+# Set timezone and upstream DNS servers
+# (You can override these at runtime with -e or env files)
+ENV TZ="Europe/Amsterdam" \
+    FTLCONF_webserver_api_password="your_password" \
+    FTLCONF_dns_upstreams="8.8.8.8;8.8.4.4" \
+    FTLCONF_dns_listeningMode="all"
+
+# Expose required ports
+# DNS
+EXPOSE 53/tcp
+EXPOSE 53/udp
+# HTTP / HTTPS
+EXPOSE 80/tcp
+EXPOSE 443/tcp
+
+# Declare volumes for persistent data
+#VOLUME ["/etc/pihole", "/etc/dnsmasq.d"]

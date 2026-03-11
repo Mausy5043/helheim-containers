@@ -45,8 +45,10 @@ ENV GPU_ARCH=gfx1102
 # Expose the Ollama API port
 EXPOSE 11434
 
+RUN mkdir -p /home/ollama/.ollama
+
 # Volume for model storage (persistent across container restarts)
-VOLUME /home/ollama/.ollama
+#VOLUME ["/home/ollama/.ollama"]
 
 # Entrypoint to start Ollama
 ENTRYPOINT ["ollama", "serve"]
