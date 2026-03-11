@@ -11,7 +11,10 @@ ARG QBITTORRENT_VERSION=5.1.4
 
 # Base tools
 RUN apt-get update && \
-    apt-get install -yqq --no-install-recommends \
+    apt-get install -y locales && \
+    echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
+    locale-gen
+RUN apt-get install -yqq --no-install-recommends \
         apt-utils && \
     apt-get install -yqq --no-install-recommends \
         build-essential \
@@ -73,7 +76,11 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Runtime dependencies only
 RUN apt-get update && \
-    apt-get install -yqq --no-install-recommends \
+    apt-get install -yqq \
+        locales && \
+    echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
+    locale-gen
+RUN apt-get install -yqq --no-install-recommends \
         apt-utils && \
     apt-get install -yqq --no-install-recommends \
         tree \
