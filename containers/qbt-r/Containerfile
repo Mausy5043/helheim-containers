@@ -4,6 +4,8 @@
 FROM debian:stable AS builder
 
 ENV DEBIAN_FRONTEND=noninteractive
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
 
 # versions to build
 ARG LIBTORRENT_VERSION=2.0.11
@@ -73,6 +75,8 @@ RUN git -c advice.detachedHead=false clone --branch release-${QBITTORRENT_VERSIO
 FROM debian:stable
 
 ENV DEBIAN_FRONTEND=noninteractive
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
 
 # Runtime dependencies only
 RUN apt-get update && \
