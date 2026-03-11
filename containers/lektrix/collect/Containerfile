@@ -32,10 +32,10 @@ RUN apt-get update && \
 # Create working directory
 WORKDIR /app
 
-RUN mkdir -p /app/config
-RUN mkdir -p /app/data
-RUN mkdir -p /app/scripts
-RUN mkdir -p /app/www
+RUN mkdir -p /app/config && \
+    mkdir -p /app/data && \
+    mkdir -p /app/scripts && \
+    mkdir -p /app/www
 
 # Copy requirements from host into container
 # use build parameter: --build-context lektrix=/home/beheer/git/lektrix
