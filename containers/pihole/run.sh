@@ -20,4 +20,4 @@ podman run -d --rm \
   --volume /srv/containers/pihole/dnsmasq:/etc/dnsmasq.d:rw,U \
   "${IMAGE_TAG}"
 
-echo "${CONTAINER_NAME} is starting on http://127.0.0.1:${PORT}"
+echo "${CONTAINER_NAME} is starting on http://127.0.0.1"
