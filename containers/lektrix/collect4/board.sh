@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 set -eu
 
-IMAGE_TAG="lektrix/collect4:latest"
 CONTAINER_NAME="lektrix_collect4"
+TAG="helheim"
+IMAGE_TAG="${CONTAINER_NAME}:${TAG}"
 
 echo "Boarding ${CONTAINER_NAME}..."
 

@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 set -eu
 
-IMAGE_TAG="lektrix/prices:latest"
 CONTAINER_NAME="lektrix_prices"
+TAG="helheim"
+IMAGE_TAG="${CONTAINER_NAME}:${TAG}"
 
 echo "Boarding ${CONTAINER_NAME}..."
 
