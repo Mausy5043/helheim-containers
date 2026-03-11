@@ -4,8 +4,8 @@ Wants=network-online.target
 After=network-online.target
 
 [Container]
-# Image built locally as qbt-r:latest
-Image=localhost/qbt-r:latest
+# Image built locally as qbt_r:helheim
+Image=localhost/qbt_r:helheim
 Network=pasta
 DNS=192.168.2.2
 
