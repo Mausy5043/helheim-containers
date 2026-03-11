@@ -4,6 +4,8 @@
 FROM debian:stable AS builder
 
 ENV DEBIAN_FRONTEND=noninteractive
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
 
 # versions to build
 ARG LIBTORRENT_VERSION=2.0.11
@@ -11,7 +13,11 @@ ARG QBITTORRENT_VERSION=5.1.4
 
 # Base tools
 RUN apt-get update && \
-    apt-get install -yqq --no-install-recommends \
+    apt-get install -yqq \
+        locales && \
+    echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
+    locale-gen
+RUN apt-get install -yqq --no-install-recommends \
         apt-utils && \
     apt-get install -yqq --no-install-recommends \
         build-essential \
@@ -44,8 +50,9 @@ RUN git -c advice.detachedHead=false clone --branch v${LIBTORRENT_VERSION} https
     cd libtorrent && \
     git submodule update --init --recursive && \
     cmake -B build \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_INSTALL_PREFIX=/usr/local && \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_INSTALL_PREFIX=/usr/local \
+          -Wno-dev && \
     cmake --build build -j$(nproc) && \
     cmake --install build
 
@@ -56,9 +63,10 @@ RUN git -c advice.detachedHead=false clone --branch v${LIBTORRENT_VERSION} https
 RUN git -c advice.detachedHead=false clone --branch release-${QBITTORRENT_VERSION} --depth=1 https://github.com/qbittorrent/qBittorrent.git && \
     cd qBittorrent && \
     cmake -B build \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DGUI=OFF \
-        -DCMAKE_INSTALL_PREFIX=/usr/local && \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DGUI=OFF \
+          -DCMAKE_INSTALL_PREFIX=/usr/local \
+          -Wno-dev && \
     cmake --build build -j$(nproc) && \
     cmake --install build
 
@@ -68,10 +76,16 @@ RUN git -c advice.detachedHead=false clone --branch release-${QBITTORRENT_VERSIO
 FROM debian:stable
 
 ENV DEBIAN_FRONTEND=noninteractive
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
 
 # Runtime dependencies only
 RUN apt-get update && \
-    apt-get install -yqq --no-install-recommends \
+    apt-get install -yqq \
+        locales && \
+    echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
+    locale-gen
+RUN apt-get install -yqq --no-install-recommends \
         apt-utils && \
     apt-get install -yqq --no-install-recommends \
         tree \
