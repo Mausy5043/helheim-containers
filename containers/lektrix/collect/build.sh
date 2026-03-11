@@ -3,8 +3,9 @@ set -eu
 
 cd "$(dirname "$0")"
 
-IMAGE_TAG="lektrix/collect:latest"
 CONTAINER_NAME="lektrix_collect"
+TAG="helheim"
+IMAGE_TAG="${CONTAINER_NAME}:${TAG}"
 
 echo "Building ${IMAGE_TAG}..."
 podman build \
@@ -17,14 +18,14 @@ podman build \
 echo
 podman run \
        --rm \
-       --name $CONTAINER_NAME \
+       --name "${CONTAINER_NAME}" \
        "${IMAGE_TAG}" \
        python3 -c "import pyarrow;
-print('PyArrow version:', pyarrow.__version__);
+print('PYARROW version:', pyarrow.__version__);
 import pandas;
-print('Pandas version:', pandas.__version__);
+print('PANDAS version:', pandas.__version__);
 import numpy;
-print('Numpy version:', numpy.__version__)"
+print('NUMPY version:', numpy.__version__)"
 
 printf "\nYou can now enable/start the lektrix-collect.service to run this container.\n\n"
 

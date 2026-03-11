@@ -3,8 +3,9 @@ set -eu
 
 cd "$(dirname "$0")"
 
-IMAGE_TAG="lektrix/collect6:latest"
 CONTAINER_NAME="lektrix_collect6"
+TAG="helheim"
+IMAGE_TAG="${CONTAINER_NAME}:${TAG}"
 
 echo "Building ${IMAGE_TAG}..."
 podman build \

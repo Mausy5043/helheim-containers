@@ -3,7 +3,9 @@ set -eu
 
 cd "$(dirname "$0")"
 
-IMAGE_TAG="ollama:latest"
+CONTAINER_NAME="ollama"
+TAG="helheim"
+IMAGE_TAG="${CONTAINER_NAME}:${TAG}"
 
 echo "Building ${IMAGE_TAG}..."
 podman build \

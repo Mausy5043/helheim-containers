@@ -3,8 +3,11 @@ set -euo pipefail
 
 cd "$(dirname "$0")"
 
-IMAGE_TAG="qbt-r:latest"
+CONTAINER_NAME="qbt_r"
+TAG="helheim"
+IMAGE_TAG="${CONTAINER_NAME}:${TAG}"
 
+echo "Building ${IMAGE_TAG}..."
 podman build \
     --tag "${IMAGE_TAG}" \
     --pull=newer \

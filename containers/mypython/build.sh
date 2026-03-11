@@ -3,7 +3,9 @@ set -eu
 
 cd "$(dirname "$0")"
 
-IMAGE_TAG="mypython"
+CONTAINER_NAME="mypython13"
+TAG="helheim"
+IMAGE_TAG="${CONTAINER_NAME}:${TAG}"
 
 echo "Building ${IMAGE_TAG}..."
 podman build \
