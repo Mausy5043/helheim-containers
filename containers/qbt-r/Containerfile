@@ -107,10 +107,8 @@ RUN echo "/usr/local/lib" > /etc/ld.so.conf.d/usr-local-lib.conf && \
 # Create runtime directories
 RUN mkdir -p /qbt-r/config /qbt-r/downloads /qbt-r/incomplete /qbt-r/monitor
 
-VOLUME /qbt-r/config
-VOLUME /qbt-r/downloads
-VOLUME /qbt-r/incomplete
-VOLUME /qbt-r/monitor
+# use VOLUME here
+VOLUME ["/qbt-test/config", "/qbt-test/downloads", "/qbt-test/incomplete", "/qbt-test/monitor"]
 
 EXPOSE 1340/tcp
 
