@@ -16,7 +16,7 @@ podman run -d --rm \
   --name "${CONTAINER_NAME}" \
   --publish "${PORT}:${PORT}" \
   --volume /etc/localtime:/etc/localtime:ro \
-  --volume /srv/containers/pytorch:/home/ollama/.ollama:rw,U \
+  --volume /srv/containers/pytorch:/usr/share/ollama/.ollama:rw,U \
   --device=/dev/kfd \
   --device=/dev/dri/renderD128 \
   --group-add=render \

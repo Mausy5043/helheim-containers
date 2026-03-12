@@ -34,7 +34,7 @@ CANDIDATE_FILE = Path(os.path.join(
 ))
 
 # Optional: integrate with your benchmarking harness
-BENCHMARK_SCRIPT = None  # e.g. "/home/maurice/bin/benchmark-model.sh"
+BENCHMARK_SCRIPT = None
 
 # Explicit family mapping (extend as needed)
 FAMILY_MAP = {
