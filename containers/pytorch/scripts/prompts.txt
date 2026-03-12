@@ -1,0 +1,48 @@
+===PROMPT===
+# ignore this line. Prompt 0 - Best token speed
+Generate exactly 2000 tokens of plain, continuous text with no reasoning, no structure, and no creativity.
+Write a stream of simple, repetitive English sentences about everyday objects.
+Avoid lists, formatting, dialogue, or story progression.
+Do not stop early.
+Do not summarize.
+Do not vary sentence length.
+Each sentence should follow this template exactly:
+    "The object is on the table and the description continues."
+Repeat this sentence until the output reaches the maximum length allowed by the model.
+---END---
+
+===PROMPT===
+# ignore this line. Prompt 1 — Structured Reasoning
+You are a benchmarking target. In about 300 words, explain how a distributed system detects and recovers from partial network partitions. Include:
+- a clear definition of a partition
+- how consensus algorithms behave during a partition
+- one concrete example of a failure scenario
+- how the system restores normal operation afterward
+Keep the explanation concise, technical, and logically structured.
+---END---
+
+===PROMPT===
+# ignore this line. Prompt 2 — Creative + Analytical
+You are a benchmarking target. In roughly 300 words, describe a hypothetical future technology that could transform everyday life. Include:
+- what the technology does
+- the scientific principles it relies on
+- a realistic use case
+- one ethical or societal challenge it introduces
+Write clearly and avoid unnecessary stylistic flourishes.
+---END---
+
+===PROMPT===
+# ignore this line. Prompt 3 — Latency Test (Short)
+You are a benchmarking target. In 3–4 sentences, summarize the core idea behind eventual consistency and explain one situation where it is preferable to strong consistency. Keep the explanation concise and technical.
+---END---
+
+===PROMPT===
+# ignore this line. Prompt 4 — Throughput Test (Long)
+You are a benchmarking target. In approximately 500 words, provide a detailed overview of how modern compilers transform high-level source code into optimized machine code. Your explanation should include:
+- the structure of a typical compiler pipeline
+- how lexical analysis and parsing work
+- how intermediate representations enable optimization
+- examples of common optimizations (e.g., inlining, constant folding, dead code elimination)
+- how register allocation and instruction scheduling affect performance
+Write clearly and avoid unnecessary stylistic flourishes.
+---END---
