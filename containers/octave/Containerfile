@@ -21,9 +21,10 @@ RUN pacman -Syu --noconfirm  && \
 
 RUN pacman -S --noconfirm --needed \
         octave \
-        yay \
+        yay
 
-RUN yay -S units
+RUN yay -S \
+        units
 
 RUN pacman -Scc --noconfirm
 
