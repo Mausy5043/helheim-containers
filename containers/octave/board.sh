@@ -7,6 +7,9 @@ IMAGE_TAG="${CONTAINER_NAME}:${TAG}"
 
 echo "Boarding ${CONTAINER_NAME}..."
 
-podman run --rm -it --name "${CONTAINER_NAME}" "${IMAGE_TAG}"
+podman run --rm -it \
+  --name "${CONTAINER_NAME}"
+  --volume /etc/localtime:/etc/localtime:ro \
+  "${IMAGE_TAG}"
 
 echo "${CONTAINER_NAME} is deboarded"
