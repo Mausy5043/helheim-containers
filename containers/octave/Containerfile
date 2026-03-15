@@ -21,8 +21,9 @@ RUN pacman -Syu --noconfirm  && \
 
 RUN pacman -S --noconfirm --needed \
         octave \
-        octave-doc \
-        octave-statistics
+        yay \
+
+RUN yay -S units
 
 RUN pacman -Scc --noconfirm
 
@@ -32,6 +33,10 @@ RUN useradd -m -u 500 -g 500 -o -s /bin/bash octave
 
 USER octave
 WORKDIR /home/octave
+
+COPY --from=scripts pkg_install.m /home/octave/pkg_install.m
+RUN /usr/bin/octave /home/octave/pkg_install.m
+
 ENV PS1="(octave) \\u@\\h:\\w\\$ "
 
 # Entrypoint to start Octave
