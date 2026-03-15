@@ -8,6 +8,7 @@ ENV LC_ALL=C.UTF-8
 RUN pacman -Syu --noconfirm  && \
     pacman -S --noconfirm --needed \
         base-devel \
+        git \
         pcre mercurial gcc-fortran gperf perl \
         rsync transfig arpack curl rapidjson fftw fltk glpk glu graphicsmagick \
         qt6-base qt6-tools hdf5 java-environment qhull qscintilla-qt6 \
@@ -21,7 +22,10 @@ RUN pacman -Syu --noconfirm  && \
 
 RUN pacman -S --noconfirm --needed \
         octave \
-        yay
+
+RUN git clone https://aur.archlinux.org/yay.git \
+    cd yay \
+    makepkg -si \
 
 RUN yay -S \
         units
