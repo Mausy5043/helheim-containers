@@ -23,6 +23,13 @@ RUN pacman -Syu --noconfirm  && \
 RUN pacman -S --noconfirm --needed \
         octave
 
+# Create group and user with fixed UID/GID
+RUN groupadd -g 500 octave
+RUN useradd -m -u 500 -g 500 -o -s /bin/bash octave
+
+USER octave
+WORKDIR /home/octave
+
 RUN git clone https://aur.archlinux.org/yay.git && \
     cd yay && \
     makepkg -si
@@ -30,14 +37,7 @@ RUN git clone https://aur.archlinux.org/yay.git && \
 RUN yay -S \
         units
 
-RUN pacman -Scc --noconfirm
-
-# Create group and user with fixed UID/GID
-RUN groupadd -g 500 octave
-RUN useradd -m -u 500 -g 500 -o -s /bin/bash octave
-
-USER octave
-WORKDIR /home/octave
+RUN yay -Scc --noconfirm
 
 COPY --from=scripts pkg_install.m /home/octave/pkg_install.m
 RUN /usr/bin/octave /home/octave/pkg_install.m
