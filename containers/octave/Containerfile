@@ -15,12 +15,11 @@ RUN apt-get update && \
         nano \
         python3 \
         python3-pip \
-        tree && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+        tree
 
 # Install Octave
-RUN apt-get install -yqq --no-install-recommends \
+RUN apt-get update && \
+    apt-get install -yqq --no-install-recommends \
         octave \
         octave-doc \
         octave-statistics && \
