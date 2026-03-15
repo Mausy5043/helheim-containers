@@ -1,25 +1,29 @@
-FROM archlinux:stable
+FROM debian:stable
 
 USER root
+ENV DEBIAN_FRONTEND=noninteractive
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
 
 # Install Octave dependencies
-RUN pacman -Syu --noconfirm  && \
-    pacman -S --noconfirm --needed \
+RUN apt-get update && \
+    apt-get install -yqq --no-install-recommends \
+        apt-utils && \
+    apt-get install -yqq \
         curl \
         ca-certificates \
         nano \
-        python \
-        python-pip \
+        python3 \
+        python3-pip \
         tree
 
-RUN pacman -S --noconfirm --needed \
+RUN apt-get install -yqq --no-install-recommends \
         octave \
         octave-doc \
-        octave-statistics
+        octave-statistics \
 
-RUN pacman -Scc --noconfirm
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Create group and user with fixed UID/GID
 RUN groupadd -g 500 octave
@@ -29,5 +33,5 @@ USER octave
 WORKDIR /home/octave
 ENV PS1="(octave) \\u@\\h:\\w\\$ "
 
-# Entrypoint to start Octave
+# Entrypoint to start Ollama
 ENTRYPOINT ["/bin/bash"]
