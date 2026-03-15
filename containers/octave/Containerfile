@@ -7,6 +7,11 @@ ENV LC_ALL=C.UTF-8
 # Install Octave dependencies
 RUN pacman -Syu --noconfirm  && \
     pacman -S --noconfirm --needed \
+        base-devel \
+        pcre mercurial gcc-fortran gperf perl \
+        rsync transfig arpack curl rapidjson fftw fltk glpk glu graphicsmagick \
+        qt6-base qt6-tools hdf5 java-environment qhull qscintilla-qt6 \
+        texinfo gnuplot llvm texlive-bin icoutils gl2ps qrupdate \
         curl \
         ca-certificates \
         nano \
