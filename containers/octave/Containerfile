@@ -21,11 +21,11 @@ RUN pacman -Syu --noconfirm  && \
         tree
 
 RUN pacman -S --noconfirm --needed \
-        octave \
+        octave
 
 RUN git clone https://aur.archlinux.org/yay.git \
     cd yay \
-    makepkg -si \
+    makepkg -si
 
 RUN yay -S \
         units
