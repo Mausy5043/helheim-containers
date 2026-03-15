@@ -23,8 +23,8 @@ RUN pacman -Syu --noconfirm  && \
 RUN pacman -S --noconfirm --needed \
         octave
 
-RUN git clone https://aur.archlinux.org/yay.git \
-    cd yay \
+RUN git clone https://aur.archlinux.org/yay.git && \
+    cd yay && \
     makepkg -si
 
 RUN yay -S \
