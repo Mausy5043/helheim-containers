@@ -1,4 +1,4 @@
-FROM archlinux:stable
+FROM archlinux:latest
 
 USER root
 ENV LANG=C.UTF-8
