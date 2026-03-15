@@ -5,8 +5,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
 
-# Install Ollama dependencies
-RUN apt-get update && \
+# Install Octave dependencies
+RUN echo "deb http://deb.debian.org/debian trixie-backports main" > /etc/apt/sources.list.d/backports.list && \
+    apt-get update && \
     apt-get install -yqq --no-install-recommends \
         apt-utils && \
     apt-get install -yqq \
@@ -17,9 +18,7 @@ RUN apt-get update && \
         python3-pip \
         tree
 
-# Install Octave
-RUN apt-get update && \
-    apt-get install -yqq --no-install-recommends \
+RUN apt-get install -t trixie-backports -yqq --no-install-recommends \
         octave \
         octave-doc \
         octave-statistics && \
