@@ -30,7 +30,8 @@ RUN useradd -m -u 500 -g 500 -o -s /bin/bash octave
 USER octave
 WORKDIR /home/octave
 
-RUN git clone https://aur.archlinux.org/yay.git && \
+RUN sed -i 's/^[[:space:]]*exit \$E_ROOT/# exit \$E_ROOT/' "/usr/bin/makepkg" && \
+    git clone https://aur.archlinux.org/yay.git && \
     cd yay && \
     makepkg -si
 
