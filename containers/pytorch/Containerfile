@@ -22,8 +22,8 @@ RUN curl -fsSL https://ollama.ai/install.sh | sh
 # Create a non-root user and group
 # Create ollama group and user with fixed UID/GID
 # remove ollama user and group and recreate them
-RUN userdel ollama && \
-    groupdel ollama && \
+RUN gpasswd -d root ollama &&\
+    userdel ollama && \
     groupadd -g 500 ollama && \
     useradd -d /usr/share/ollama -u 500 -g 500 -o -s /bin/bash ollama && \
     usermod -aG render ollama && \
