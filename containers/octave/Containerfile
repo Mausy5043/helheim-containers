@@ -38,9 +38,8 @@ RUN pacman -S --noconfirm --needed \
 
 # Install units from AUR
 RUN git clone https://aur.archlinux.org/units.git && \
-    cd units
-
-RUN makepkg -si --skippgpcheck --noconfirm
+    cd units && \
+    makepkg -si --skippgpcheck --noconfirm
 
 RUN cd .. && rm -rf units
 
