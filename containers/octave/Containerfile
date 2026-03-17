@@ -4,34 +4,44 @@ USER root
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
 
-# Install Octave dependencies
+# Initialise pacman and fix makepkg
 RUN pacman -Syu --noconfirm  && \
-    pacman -S --noconfirm --needed \
-        base-devel \
-        git \
-        pcre mercurial gcc-fortran gperf perl \
-        rsync transfig arpack curl rapidjson fftw fltk glpk glu graphicsmagick \
-        qt6-base qt6-tools hdf5 java-environment qhull qscintilla-qt6 \
-        texinfo gnuplot llvm texlive-bin icoutils gl2ps qrupdate \
-        curl \
-        ca-certificates \
-        nano \
-        python \
-        python-pip \
-        tree && \
     sed -i 's/^[[:space:]]*exit \$E_ROOT/# exit \$E_ROOT/' "/usr/bin/makepkg"
 
+# Install basic packages
+RUN pacman -S --noconfirm --needed \
+        base-devel \
+        curl \
+        ca-certificates \
+        git \
+        nano \
+        tree
 
-#RUN git clone https://aur.archlinux.org/yay.git && \
-#    cd yay && \
-#    makepkg -si --noconfirm
-# Install octave from official repos and units from AUR
-RUN pacman -S --noconfirm --needed octave
-    #&& \
-RUN git clone https://aur.archlinux.org/units.git
-    # && \
-RUN cd units; makepkg -si --noconfirm
-    # && \
+# Install python and several packages we may need
+RUN pacman -S --noconfirm --needed \
+        python \
+        python-charset-normalizer \
+        python-idna \
+        python-pip \
+        python-requests \
+        python-urllib3
+
+# Install Octave dependencies
+RUN pacman -S --noconfirm --needed \
+        arpack fftk fltk gcc-fortran glu glpk gperf graphicsmagick hdf5 \
+        icoutils java-environment llvm mercurial pcre qhull qrupdate qscintilla-qt6 \
+        qt6-base qt6-tools rapidjson rsync texinfo texlive-bin transfig gl2ps perl \
+
+# Install Octave from official repos
+RUN pacman -S --noconfirm --needed \
+        octave
+
+# Install units from AUR
+RUN git clone https://aur.archlinux.org/units.git && \
+    cd units
+    
+RUN makepkg -si --skippgpcheck --noconfirm
+
 RUN cd .. && rm -rf units
 
 ## Clean up pacman cache
@@ -44,10 +54,6 @@ RUN useradd -m -u 500 -g 500 -o -s /bin/bash octave
 USER octave
 WORKDIR /home/octave
 
-#RUN yay -S  --noconfirm --needed \
-#        units \
-#
-#RUN yay -Scc --noconfirm
 
 COPY --from=scripts pkg_install.m /home/octave/pkg_install.m
 RUN /usr/bin/octave /home/octave/pkg_install.m
