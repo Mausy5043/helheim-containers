@@ -1,4 +1,4 @@
-FROM rocm/pytorch:latest
+FROM docker.io/rocm/pytorch:latest
 
 # switch to `root` for easy installation
 USER root
@@ -16,22 +16,20 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# RUN groupadd -r render    # already exists in pytorch
-
 # Install Ollama
 RUN curl -fsSL https://ollama.ai/install.sh | sh
 
 # Create a non-root user and group
 # Create ollama group and user with fixed UID/GID
 # remove ollama user and group and recreate them
-RUN userdel ollama
-RUN groupdel ollama
-RUN groupadd -g 500 ollama
-RUN useradd -d /usr/share/ollama -u 500 -g 500 -o -s /bin/bash ollama
-RUN usermod -aG render ollama
-RUN usermod -aG video ollama
-RUN usermod -aG ollama root
-RUN chown -R ollama:ollama /usr/share/ollama
+RUN userdel ollama && \
+    groupdel ollama && \
+    groupadd -g 500 ollama && \
+    useradd -d /usr/share/ollama -u 500 -g 500 -o -s /bin/bash ollama && \
+    usermod -aG render ollama && \
+    usermod -aG video ollama && \
+    usermod -aG ollama root && \
+    chown -R ollama:ollama /usr/share/ollama
 
 USER ollama
 WORKDIR /usr/share/ollama
