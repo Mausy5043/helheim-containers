@@ -28,7 +28,7 @@ RUN pacman -S --noconfirm --needed \
 
 # Install Octave dependencies
 RUN pacman -S --noconfirm --needed \
-        arpack fftk fltk gcc-fortran glu glpk gperf graphicsmagick hdf5 \
+        arpack fftw fltk gcc-fortran glu glpk gperf graphicsmagick hdf5 \
         icoutils java-environment llvm mercurial pcre qhull qrupdate qscintilla-qt6 \
         qt6-base qt6-tools rapidjson rsync texinfo texlive-bin transfig gl2ps perl \
 
@@ -39,7 +39,7 @@ RUN pacman -S --noconfirm --needed \
 # Install units from AUR
 RUN git clone https://aur.archlinux.org/units.git && \
     cd units
-    
+
 RUN makepkg -si --skippgpcheck --noconfirm
 
 RUN cd .. && rm -rf units
