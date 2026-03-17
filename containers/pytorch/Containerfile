@@ -39,10 +39,10 @@ ENV PS1="(ollama-pytorch) \\u@\\h:\\w\\$ "
 ENV OLLAMA_HOST=0.0.0.0:11434
 ENV OLLAMA_MODELS=/usr/share/ollama/.ollama/models
 # ENV OLLAMA_NUM_PARALLEL=1
-# We have gfx1103, but gfx1102 is the closest one that is supported ATM
-ENV HSA_OVERRIDE_GFX_VERSION=11.0.2
-ENV ROCM_TARGET=gfx1102
-ENV GPU_ARCH=gfx1102
+# We have gfx1103, but gfx1102 is the closest one until FEB2026 and we needed these:
+# ENV HSA_OVERRIDE_GFX_VERSION=11.0.2
+# ENV ROCM_TARGET=gfx1102
+# ENV GPU_ARCH=gfx1102
 
 # Expose the Ollama API port
 EXPOSE 11434
