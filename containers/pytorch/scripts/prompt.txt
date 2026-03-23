@@ -1,1 +1,5 @@
+Instruction:
+Format your output as MarkDown.
+
+Query:
 Write a Python function that takes a list of integers and returns all prime numbers. Include docstrings and unittests.
