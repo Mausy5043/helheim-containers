@@ -1,5 +1,5 @@
 Instruction:
-Format your output as MarkDown.
+Format your output as MarkDown. Do not use a single hash to start a new chapter.
 
 Query:
 Write a Python function that takes a list of integers and returns all prime numbers. Include docstrings and unittests.
