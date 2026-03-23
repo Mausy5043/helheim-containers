@@ -38,7 +38,8 @@ while IFS= read -r MODEL; do
   sync; sync; sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'
 
   echo
-  echo "=== $MODEL ==="
+  echo "### $MODEL"
+  echo
 
   RESPONSE=$(curl -s \
     --max-time "$TIMEOUT" \
