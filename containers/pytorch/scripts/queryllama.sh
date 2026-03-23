@@ -2,7 +2,7 @@
 set -u
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROMPT=$(cat "${SCRIPT_DIR}/prompts.txt")
+PROMPT=$(<"${SCRIPT_DIR}/prompt.txt")
 # "Write a Python function that takes a list of integers and returns all prime numbers. Include docstrings and unittests."
 API_URL="${API_URL:-http://127.0.0.1:11434/api/generate}"
 TIMEOUT="${TIMEOUT:-120}"
@@ -26,65 +26,34 @@ fi
 
 
 echo "Querying installed models with:"
-echo $PROMPT
+echo "$PROMPT"
 echo
 
-for MODEL in $MODEL_LIST; do
+while IFS= read -r MODEL; do
   [[ -z "$MODEL" ]] && continue
-
-  echo
-  echo "=== $MODEL ==="
 
   # reset the GPU
   rocm-smi --gpureset -d 0 >/dev/null || echo "GPU reset failed!"
   # reclaim buffered RAM
   sync; sync; sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'
 
-  # Give Prompt
+  echo
+  echo "=== $MODEL ==="
+
   RESPONSE=$(curl -s \
     --max-time "$TIMEOUT" \
-    -w "\n%{http_code}" "$API_URL" \
-    -d "$(jq -nc --arg model "$MODEL" --arg prompt "$PROMPT" '{model:$model, prompt:$prompt, stream:false}')" \
-    || echo "000")
-  echo $RESULT
-  HTTP_CODE="${RESPONSE##*$'\n'}"
-  RESULT="${RESPONSE%$'\n'*}"
+    "$API_URL" \
+    -d "$(jq -nc \
+      --arg model "$MODEL" \
+      --arg prompt "$PROMPT" \
+      '{model:$model, prompt:$prompt, stream:false}')")
 
-  if [[ "$HTTP_CODE" != "200" ]]; then
-    echo "  Error:        Request failed with HTTP $HTTP_CODE" >&2
-    echo "  Response was: $RESPONSE"
-    echo
+  if ! echo "$RESPONSE" | jq empty 2>/dev/null; then
+    echo "  Error: Invalid JSON response"
+    echo "$RESPONSE"
     continue
   fi
 
-  if ! echo "$RESULT" | jq empty 2>/dev/null; then
-    echo "  Error:        Invalid JSON response" >&2
-    echo "  Response was: $RESPONSE"
-    echo
-    continue
-  fi
-
-  TOKENS=$(echo "$RESULT" | jq '.eval_count // empty' 2>/dev/null || echo "")
-  DURATION_NS=$(echo "$RESULT" | jq '.eval_duration // empty' 2>/dev/null || echo "")
-
-  if [[ -z "$TOKENS" || -z "$DURATION_NS" ]]; then
-    echo "  Error: model did not return timing data" >&2
-    echo
-    continue
-  fi
-
-  awk -v t="$TOKENS" -v d="$DURATION_NS" '
-    BEGIN {
-      if (t <= 0 || d <= 0) {
-        print "  Error: Invalid timing data (tokens=" t ", duration=" d ")" > "/dev/stderr"
-        exit 1
-      }
-      secs = d / 1e9
-      if (secs == 0) {
-        print "  Error: Duration is zero" > "/dev/stderr"
-        exit 1
-      }
-      speed = t / secs
-      printf "  Tokens: %d\n  Time: %.3fs\n  Speed: %.2f tokens/s\n\n", t, secs, speed
-    }' || true
-done
+  # Print only the generated text
+  echo "$RESPONSE" | jq -r '.response'
+done <<< "$MODEL_LIST"
