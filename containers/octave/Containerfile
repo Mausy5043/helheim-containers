@@ -9,31 +9,28 @@ RUN pacman -Syu --noconfirm  && \
     sed -i 's/^[[:space:]]*exit \$E_ROOT/# exit \$E_ROOT/' "/usr/bin/makepkg"
 
 # Install basic packages
+# Install python and several packages we may need
+# Install Octave dependencies
+# Install Octave from official repos
 RUN pacman -S --noconfirm --needed \
         base-devel \
         curl \
         ca-certificates \
         git \
         nano \
-        tree
-
-# Install python and several packages we may need
-RUN pacman -S --noconfirm --needed \
+        tree && \
+    pacman -S --noconfirm --needed \
         python \
         python-charset-normalizer \
         python-idna \
         python-pip \
         python-requests \
-        python-urllib3
-
-# Install Octave dependencies
-RUN pacman -S --noconfirm --needed \
+        python-urllib3 && \
+    pacman -S --noconfirm --needed \
         arpack fftw fltk gcc-fortran glu glpk gperf graphicsmagick hdf5 \
         icoutils java-environment llvm mercurial pcre qhull qrupdate qscintilla-qt6 \
-        qt6-base qt6-tools rapidjson rsync texinfo texlive-bin transfig gl2ps perl
-
-# Install Octave from official repos
-RUN pacman -S --noconfirm --needed \
+        qt6-base qt6-tools rapidjson rsync texinfo texlive-bin transfig gl2ps perl && \
+    pacman -S --noconfirm --needed \
         octave
 
 # Install units from AUR

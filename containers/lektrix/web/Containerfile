@@ -4,8 +4,9 @@ FROM debian:stable
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install lighttpd
-RUN apt-get update && \
+# Create directories expected by lighttpd & Install lighttpd
+RUN mkdir -p /var/www/html && \
+    apt-get update && \
     apt-get install -yqq --no-install-recommends \
         apt-utils && \
     apt-get install -yqq --no-install-recommends \
@@ -16,9 +17,6 @@ RUN apt-get update && \
 # Enable required modules and remove Debian's placeholder
 RUN ln -s ../conf-available/10-dir-listing.conf /etc/lighttpd/conf-enabled/10-dir-listing.conf && \
     rm -f /etc/lighttpd/conf-enabled/99-unconfigured.conf
-
-# Create directories expected by lighttpd
-RUN mkdir -p /var/www/html
 
 # Expose internal HTTP port
 EXPOSE 80
