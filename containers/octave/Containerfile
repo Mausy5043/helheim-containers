@@ -5,7 +5,8 @@ ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
 
 # Initialise pacman and fix makepkg
-RUN pacman -Syu --noconfirm  && \
+RUN pacman-key --init && \
+    pacman -Syu --noconfirm  && \
     sed -i 's/^[[:space:]]*exit \$E_ROOT/# exit \$E_ROOT/' "/usr/bin/makepkg"
 
 # Install basic packages
