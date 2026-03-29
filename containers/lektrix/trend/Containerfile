@@ -26,10 +26,7 @@ RUN apt-get update && \
         libpng16-16t64 \
         libsqlite3-0 \
         libffi-dev \
-        libzstd1 && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    python -m pip install --no-cache-dir --root-user-action ignore --upgrade pip
+        libzstd1
 
 # Create working directory
 WORKDIR /app
@@ -45,7 +42,13 @@ RUN mkdir -p /app/config && \
 COPY --from=lektrix requirements.txt /app/requirements.txt
 
 # Install Python dependencies
-RUN python -m pip install --no-cache-dir --root-user-action ignore -r /app/requirements.txt
+# If pyarrow <= 20.0.0 fails to find a 'wheel', it will attempt to compile.
+# The system dependencies added above will help this succeed.
+RUN python -m pip install --no-cache-dir --root-user-action ignore --upgrade pip && \
+    python -m pip install --no-cache-dir --root-user-action ignore -r /app/requirements.txt
 
-# Default command: open a shell (scripts are mounted at runtime)
-CMD ["bash"]
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Default command: open a shell
+CMD ["/bin/bash"]

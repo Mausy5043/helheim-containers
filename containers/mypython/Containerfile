@@ -1,4 +1,5 @@
-FROM python:3.13
+# Containerfile for mypython
+FROM python:3.13-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -8,6 +9,7 @@ RUN apt-get update && \
         apt-utils && \
     apt-get install -yqq --no-install-recommends \
         bc \
+        bzip2 \
         curl \
         g++ \
         git \
@@ -23,14 +25,16 @@ RUN apt-get update && \
         libopenblas0 \
         libpng16-16t64 \
         libsqlite3-0 \
-        libzstd1 && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    python -m pip install --no-cache-dir --root-user-action ignore --upgrade pip
-
+        libffi-dev \
+        libzstd1
 
 # Create working directory
 WORKDIR /app
+
+RUN mkdir -p /app/config && \
+    mkdir -p /app/data && \
+    mkdir -p /app/scripts && \
+    mkdir -p /app/www
 
 # Copy requirements from host into container
 # use build parameter: --build-context lektrix=/home/beheer/git/lektrix
@@ -39,7 +43,12 @@ COPY --from=app requirements.txt /app/requirements.txt
 # Install Python dependencies
 # If pyarrow <= 20.0.0 fails to find a 'wheel', it will attempt to compile.
 # The system dependencies added above will help this succeed.
-RUN python -m pip install --no-cache-dir --root-user-action ignore -r /app/requirements.txt
+RUN python -m pip install --no-cache-dir --root-user-action ignore --upgrade pip && \
+    python -m pip install --no-cache-dir --root-user-action ignore -r /app/requirements.txt
 
-# Entrypoint to start
-ENTRYPOINT ["/bin/bash"]
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Default command: open a shell
+CMD ["/bin/bash"]
+# ENTRYPOINT ["/bin/bash"]
