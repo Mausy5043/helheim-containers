@@ -6,7 +6,7 @@ FROM docker.io/pihole/pihole:latest
 # remove pihole user and group and recreate them
 RUN gpasswd -d pihole pihole &&\
     userdel pihole && \
-    groupdel pihole && \
+    groupdel pihole; \
     groupadd -g 500 pihole && \
     useradd -d /home/pihole -u 500 -g 500 -o -s /bin/bash pihole
 
@@ -25,7 +25,7 @@ EXPOSE 53/udp
 # HTTP / HTTPS
 EXPOSE 80/tcp
 EXPOSE 443/tcp
-# Uncomment the line below if you are using Pi-hole as your DHCP server
-# EXPOSE 67/udp
+# DHCP
+EXPOSE 67/udp
 # Uncomment the line below if you are using Pi-hole as your NTP server
 # EXPOSE 123/udp
