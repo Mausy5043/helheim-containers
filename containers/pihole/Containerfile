@@ -1,4 +1,5 @@
 FROM docker.io/pihole/pihole:latest
+# This is a ALPINE image
 
 # Create a non-root user and group
 # Create pihole group and user with fixed UID/GID
@@ -7,9 +8,7 @@ RUN gpasswd -d pihole pihole &&\
     userdel pihole && \
     groupdel pihole && \
     groupadd -g 500 pihole && \
-    useradd -d /usr/share/pihole -u 500 -g 500 -o -s /bin/bash pihole && \
-    usermod -aG pihole root && \
-    chown -R pihole:pihole /usr/share/pihole
+    useradd -d /home/pihole -u 500 -g 500 -o -s /bin/bash pihole
 
 
 # Set timezone and upstream DNS servers
