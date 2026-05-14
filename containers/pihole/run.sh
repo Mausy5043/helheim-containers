@@ -12,6 +12,7 @@ echo "Starting ${CONTAINER_NAME}..."
 
 podman run -d --rm \
   --name "${CONTAINER_NAME}" \
+  --cap-add=NET_ADMIN \
   --publish "53:53" \
   --publish "28080:80" \
   --publish "28081:443" \
