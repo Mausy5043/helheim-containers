@@ -3,7 +3,7 @@ FROM docker.io/pihole/pihole:latest
 # Create a non-root user and group
 # Create pihole group and user with fixed UID/GID
 # remove pihole user and group and recreate them
-RUN gpasswd -d root pihole &&\
+RUN gpasswd -d pihole pihole &&\
     userdel pihole && \
     groupdel pihole && \
     groupadd -g 500 pihole && \
