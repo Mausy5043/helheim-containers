@@ -55,7 +55,7 @@ WORKDIR /home/octave
 
 COPY --from=scripts pkg_install.m /home/octave/pkg_install.m
 
-RUN /usr/bin/octave /home/octave/pkg_install.m
+# RUN /usr/bin/octave /home/octave/pkg_install.m
 
 ENV PS1="(octave) \\u@\\h:\\w\\$ "
 
