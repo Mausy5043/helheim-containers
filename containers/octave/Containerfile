@@ -30,9 +30,14 @@ RUN pacman -S --noconfirm --needed \
     pacman -S --noconfirm --needed \
         arpack fftw fltk gcc-fortran glu glpk gperf graphicsmagick hdf5 \
         icoutils java-environment llvm mercurial pcre qhull qrupdate qscintilla-qt6 \
-        qt6-base qt6-tools rapidjson rsync texinfo texlive-bin transfig gl2ps perl && \
-    pacman -S --noconfirm --needed \
+        qt6-base qt6-tools rapidjson rsync texinfo texlive-bin transfig gl2ps perl
+
+# Install octave and create user & group with fixed UID/GID
+RUN pacman -S --noconfirm --needed \
         octave
+
+RUN groupadd -g 500 octave && \
+    useradd -m -u 500 -g 500 -o -s /bin/bash octave
 
 # Install units from AUR
 RUN git clone https://aur.archlinux.org/units.git && \
@@ -43,10 +48,6 @@ RUN git clone https://aur.archlinux.org/units.git && \
 
 ## Clean up pacman cache
 RUN pacman -Scc --noconfirm
-
-# Create group and user with fixed UID/GID
-RUN groupadd -g 500 octave && \
-    useradd -m -u 500 -g 500 -o -s /bin/bash octave
 
 USER octave
 
