@@ -12,10 +12,10 @@ RUN gpasswd -d pihole pihole &&\
 
 
 # Set timezone and upstream DNS servers
+#    FTLCONF_dns_upstreams="8.8.8.8;8.8.4.4;192.168.1.1" \
+#    FTLCONF_dns_listeningMode="ALL"
 # (You can override these at runtime with -e or env files)
-ENV TZ="Europe/Amsterdam" \
-    FTLCONF_dns_upstreams="8.8.8.8;8.8.4.4;192.168.1.1" \
-    FTLCONF_dns_listeningMode="ALL"
+ENV TZ="Europe/Amsterdam"
 
 # Expose required ports
 # DNS
