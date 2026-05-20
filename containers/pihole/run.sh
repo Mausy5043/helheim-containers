@@ -12,7 +12,7 @@ echo "Starting ${CONTAINER_NAME}..."
 
 podman run -d --rm \
   --name "${CONTAINER_NAME}" \
-  --env WEBPASSWORD="$(cat /etc/pihole/._web.password)" \
+  --env WEBPASSWORD="$(cat /srv/containers/pihole/etc/pihole/._web.password)" \
   --cap-add=NET_ADMIN \
   --publish "53:53/tcp" --publish "53:53/udp" \
   --publish "67:67/udp" \
