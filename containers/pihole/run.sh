@@ -3,6 +3,7 @@ set -eu
 
 CONTAINER_NAME="pihole"
 TAG="helheim"
+HOST_TAG="${CONTAINER_NAME}.${TAG}"
 IMAGE_TAG="${CONTAINER_NAME}:${TAG}"
 
 # Stop and remove any existing test container
@@ -12,8 +13,10 @@ echo "Starting ${CONTAINER_NAME}..."
 
 podman run -d --rm \
   --name "${CONTAINER_NAME}" \
+  --hostname "${HOST_TAG}" \
   --env FTLCONF_webserver_api_password="" \
   --cap-add=NET_ADMIN \
+  --cap-add=NET_RAW \
   --publish "53:53/tcp" --publish "53:53/udp" \
   --publish "67:67/udp" \
   --publish "28080:80" \
