@@ -28,3 +28,6 @@ EXPOSE 443/tcp
 EXPOSE 67/udp
 # Uncomment the line below if you are using Pi-hole as your NTP server
 # EXPOSE 123/udp
+
+USER pihole
+#WORKDIR /home/pihole
