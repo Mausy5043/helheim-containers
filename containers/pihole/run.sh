@@ -17,6 +17,7 @@ podman run -d --rm \
   --env FTLCONF_webserver_api_password="" \
   --cap-add=NET_ADMIN \
   --cap-add=NET_RAW \
+  --cap-add=CHOWN \
   --publish "53:53/tcp" --publish "53:53/udp" \
   --publish "67:67/udp" \
   --publish "28080:80" \
