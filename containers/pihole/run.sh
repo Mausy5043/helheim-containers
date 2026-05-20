@@ -22,8 +22,8 @@ podman run -d --rm \
   --publish "28080:80" \
   --publish "28081:443" \
   --volume /etc/localtime:/etc/localtime:ro \
-  --volume /srv/containers/pihole/etc:/etc/pihole:rw \
-  --volume /srv/containers/pihole/dnsmasq:/etc/dnsmasq.d:rw \
+  --volume /srv/containers/pihole/etc:/etc/pihole:rw,U \
+  --volume /srv/containers/pihole/dnsmasq:/etc/dnsmasq.d:rw,U \
   "${IMAGE_TAG}"
 # Add these options later:
 #  --publish "123:123" \
