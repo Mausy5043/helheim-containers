@@ -2,8 +2,8 @@
 set -eu
 
 CONTAINER_NAME="pihole"
-TAG="helheim"
-IMAGE_TAG="${CONTAINER_NAME}:${TAG}"
+# TAG="helheim"
+# IMAGE_TAG="${CONTAINER_NAME}:${TAG}"
 
 echo "Boarding ${CONTAINER_NAME}..."
 
