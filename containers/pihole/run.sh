@@ -12,7 +12,7 @@ echo "Starting ${CONTAINER_NAME}..."
 
 podman run -d --rm \
   --name "${CONTAINER_NAME}" \
-  --env FTLCONF_webserver_api_password="$(cat /srv/containers/pihole/._web.password)" \
+  --env FTLCONF_webserver_api_password=$(cat /srv/containers/pihole/._web.password) \
   --cap-add=NET_ADMIN \
   --publish "53:53/tcp" --publish "53:53/udp" \
   --publish "67:67/udp" \
