@@ -23,10 +23,11 @@ podman run -d --rm \
   --publish "28080:80" \
   --publish "28081:443" \
   --volume /etc/localtime:/etc/localtime:ro \
-  --volume /srv/containers/pihole/etc:/etc/pihole:rw,U \
-  --volume /srv/containers/pihole/dnsmasq:/etc/dnsmasq.d:rw,U \
+  --volume /srv/containers/pihole/etc/hosts:/etc/hosts:ro \
+  --volume /srv/containers/pihole/etc/pihole:/etc/pihole:rw,U \
+  --volume /srv/containers/pihole/etc/dnsmasq:/etc/dnsmasq.d:rw,U \
   "${IMAGE_TAG}"
-# Add these options later:
-#  --publish "123:123" \
+# Add these options later?:
+#  --publish "123:123" \  # NTP
 
 echo "${CONTAINER_NAME} is starting on http://127.0.0.1"
