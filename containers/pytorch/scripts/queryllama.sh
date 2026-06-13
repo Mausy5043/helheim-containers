@@ -33,10 +33,13 @@ while IFS= read -r MODEL; do
   [[ -z "$MODEL" ]] && continue
 
   # reset the GPU
-  rocm-smi --gpureset -d 0 >/dev/null || echo "GPU reset failed!"
+  if command -v rocm-smi &> /dev/null; then
+    rocm-smi --gpureset -d 0 >/dev/null || echo "GPU reset failed!"
+  fi
   # reclaim buffered RAM
-  sync; sync; sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'
-
+  if [[ -e /proc/sys/vm/drop_caches ]]; then
+    sync; sync; sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'
+  fi
   echo
   echo "### $MODEL"
   echo

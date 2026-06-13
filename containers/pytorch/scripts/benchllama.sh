@@ -34,9 +34,13 @@ for MODEL in $MODEL_LIST; do
   echo "=== $MODEL ==="
   
   # reset the GPU
-  rocm-smi --gpureset -d 0 >/dev/null || echo "GPU reset failed!"
+  if command -v rocm-smi &> /dev/null; then
+    rocm-smi --gpureset -d 0 >/dev/null || echo "GPU reset failed!"
+  fi
   # reclaim buffered RAM
-  sync; sync; sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'
+  if [[ -e /proc/sys/vm/drop_caches ]]; then
+    sync; sync; sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'
+  fi
   # Warm-up run (not measured)
   WARMUP=$(curl -s --max-time "$TIMEOUT" -w "\n%{http_code}" "$API_URL" \
     -d "$(jq -nc --arg model "$MODEL" --arg prompt "$PROMPT" \
