@@ -1,0 +1,38 @@
+[Unit]
+Description=pihole container
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+# Always recreate the container to avoid stale state
+ExecStartPre=/usr/bin/podman rm -f pihole 2>/dev/null || true
+
+ExecStart=/usr/bin/podman run \
+    --name pihole \
+    --rm \
+    --hostname "${HOST_TAG}" \
+    --env FTLCONF_webserver_api_password="" \
+    --cap-add=NET_ADMIN \
+    --cap-add=NET_RAW \
+    --cap-add=CHOWN \
+    --publish "53:53/tcp" --publish "53:53/udp" \
+    --publish "67:67/udp" \
+    --publish "28080:80" \
+    --publish "28081:443" \
+    --volume /etc/localtime:/etc/localtime:ro \
+    --volume /srv/containers/pihole/etc/hosts:/etc/hosts:ro \
+    --volume /srv/containers/pihole/etc/pihole:/etc/pihole:rw,U \
+    --volume /srv/containers/pihole/etc/dnsmasq:/etc/dnsmasq.d:rw,U \
+      pihole:helheim
+
+ExecStop=/usr/bin/podman stop pihole
+StandardOutput=null
+StandardError=null
+Restart=on-failure
+RestartSec=5
+
+# Rootless Podman best practices
+Type=simple
+
+[Install]
+WantedBy=default.target
