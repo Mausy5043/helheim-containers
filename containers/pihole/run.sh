@@ -18,7 +18,8 @@ podman run -d --rm \
   --cap-add=NET_ADMIN \
   --cap-add=NET_RAW \
   --cap-add=CHOWN \
-  --publish "53:53/tcp" --publish "53:53/udp" \
+  --publish "53:53/tcp" \
+  --publish "53:53/udp" \
   --publish "67:67/udp" \
   --publish "28080:80" \
   --publish "28081:443" \
