@@ -637,7 +637,7 @@
   #
   # Allowed values are:
   #     true or false
-  logging = false
+  logging = true
 
   # Ignore unknown DHCP clients.
   # If this option is set, Pi-hole ignores all clients which are not explicitly
@@ -697,9 +697,7 @@
     "2c:cf:67:c4:fc:a7,homeassistant",
     "48:f1:eb:9e:3e:a6,nintendo-switch2",
     "4c:6a:f6:b4:54:14,nokia-e",
-    "54:08:3b:c5:0d:44,fairphone-5-m",
     "9C:32:CE:E9:34:D0,proton3",
-    "cc:0d:f2:6c:3c:b9,motorola-m",
     "f4:d1:08:c6:cd:cf,chromebook-m",
     "F8:4E:17:B6:4D:BC,smarttv"
   ] ### CHANGED, default = []
@@ -1361,19 +1359,19 @@
     #
     # Allowed values are:
     #     any writable file
-    ftl = "/run/log/pihole/FTL.log" ### CHANGED, default = "/var/log/pihole/FTL.log"
+    ftl = "/etc/pihole/log/FTL.log" ### CHANGED, default = "/var/log/pihole/FTL.log"
 
     # The log file used by the embedded dnsmasq DNS server
     #
     # Allowed values are:
     #     Any writable file
-    dnsmasq = "/run/log/pihole/pihole.log" ### CHANGED, default = "/var/log/pihole/pihole.log"
+    dnsmasq = "/etc/pihole/log/pihole.log" ### CHANGED, default = "/var/log/pihole/pihole.log"
 
     # The log file used by the webserver
     #
     # Allowed values are:
     #     Any writable file
-    webserver = "/run/log/pihole/webserver.log" ### CHANGED, default = "/var/log/pihole/webserver.log"
+    webserver = "/etc/pihole/log/webserver.log" ### CHANGED, default = "/var/log/pihole/webserver.log"
 
 [misc]
   # Using privacy levels you can specify which level of detail you want to see in your
@@ -1770,4 +1768,3 @@
 # Configuration statistics:
 # 166 total entries out of which 138 entries are default
 # --> 28 entries are modified
-
