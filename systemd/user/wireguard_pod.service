@@ -9,10 +9,15 @@ ExecStartPre=/usr/bin/podman rm -f wireguard 2>/dev/null || true
 
 ExecStart=/usr/bin/podman run \
     --name wireguard \
-    --rm \
     --hostname "wireguard.helheim" \
+    --rm \
+    --cap-add=NET_ADMIN \
+    --cap-add=SYS_MODULE \
+    --env PEERS=3 \
+    --env LOG_CONFS=true \
     --publish "51820:51820/udp" \
     --volume /etc/localtime:/etc/localtime:ro \
+    --volume /srv/containers/wireguard/config:/config:Z \
       wireguard:helheim
 
 ExecStop=/usr/bin/podman stop wireguard

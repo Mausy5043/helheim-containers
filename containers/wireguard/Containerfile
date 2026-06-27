@@ -1,14 +1,5 @@
 FROM docker.io/linuxserver/wireguard:latest
 # This is a ALPINE image
 
-# Create a non-root user and group
-# Create pihole group and user with fixed UID/GID
-# remove pihole user and group and recreate them
-#RUN gpasswd -d pihole pihole &&\
-#    userdel pihole && \
-#    groupdel pihole; \
-#    groupadd -g 500 pihole && \
-#    useradd -d /home/pihole -u 500 -g 500 -o -s /bin/bash pihole
-
 # Set timezone
 ENV TZ="Europe/Amsterdam"
