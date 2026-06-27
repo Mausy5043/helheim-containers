@@ -11,6 +11,6 @@ podman rm -f "${CONTAINER_NAME}" 2>/dev/null || true
 
 echo "Starting ${CONTAINER_NAME}..."
 
-systemctl --user start pihole_pod
+systemctl --user start wireguard_pod
 
 echo "${CONTAINER_NAME} is starting on http://127.0.0.1"
