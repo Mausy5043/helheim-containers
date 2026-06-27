@@ -1,0 +1,28 @@
+[Unit]
+Description=wireguard container
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+# Always recreate the container to avoid stale state
+ExecStartPre=/usr/bin/podman rm -f wireguard 2>/dev/null || true
+
+ExecStart=/usr/bin/podman run \
+    --name wireguard \
+    --rm \
+    --hostname "wireguard.helheim" \
+    --publish "51820:51820/udp" \
+    --volume /etc/localtime:/etc/localtime:ro \
+      wireguard:helheim
+
+ExecStop=/usr/bin/podman stop wireguard
+StandardOutput=null
+StandardError=null
+Restart=on-failure
+RestartSec=5
+
+# Rootless Podman best practices
+Type=simple
+
+[Install]
+WantedBy=default.target
