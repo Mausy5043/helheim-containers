@@ -12,6 +12,8 @@ podman rm -f "${CONTAINER_NAME}" 2>/dev/null || true
 
 podman run -it --rm  \
     --name "${CONTAINER_NAME}" \
+    --network=host \
+    --dns=192.168.2.3 \
     --volume /etc/localtime:/etc/localtime:ro \
     --volume /home/beheer/git/lektrix/bin:/app/scripts:rw \
     --volume /srv/containers/lektrix/data:/app/data:rw \
