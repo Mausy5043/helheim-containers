@@ -10,9 +10,10 @@ echo "Boarding ${CONTAINER_NAME}..."
 # Stop and remove any existing container
 podman rm -f "${CONTAINER_NAME}" 2>/dev/null || true
 
+# Error: slirp4netns support has been removed, use --network=pasta instead;
+# --network=slirp4netns:allow_host_loopback=true \
 podman run -it --rm  \
     --name "${CONTAINER_NAME}" \
-    --network=slirp4netns:allow_host_loopback=true \
     --dns=192.168.2.2 \
     --volume /etc/localtime:/etc/localtime:ro \
     --volume /home/beheer/git/lektrix/bin:/app/scripts:rw \
