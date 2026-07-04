@@ -1,7 +1,7 @@
 FROM docker.io/gnuoctave/octave:latest
 
-RUN apt-get update \
-    apt-get install units \
+RUN apt-get update && \
+    apt-get install units
 
 # ENV LANG=C.UTF-8
 # ENV LC_ALL=C.UTF-8
