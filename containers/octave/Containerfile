@@ -1,9 +1,14 @@
 FROM docker.io/gnuoctave/octave:latest
 
+RUN apt-get update \
+    apt-get install units \
+
 # ENV LANG=C.UTF-8
 # ENV LC_ALL=C.UTF-8
 
 ENV PS1="(octave) \\u@\\h:\\w\\$ "
+COPY --from=scripts pkg_install.m /workdir/pkg_install.m
+RUN /usr/bin/octave /workdir/pkg_install.m
 
 # Entrypoint to start Octave
 # ENTRYPOINT ["/bin/bash"]
