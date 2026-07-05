@@ -11,7 +11,7 @@ ExecStart=/usr/bin/podman run \
     --name pihole \
     --rm \
     --hostname "pihole.helheim" \
-    --network=host \
+    --network=pasta \
     --env FTLCONF_webserver_api_password="" \
     --cap-add=NET_ADMIN \
     --cap-add=NET_RAW \
