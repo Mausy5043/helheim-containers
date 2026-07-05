@@ -17,7 +17,6 @@ ExecStart=/usr/bin/podman run \
     --cap-add=SYS_MODULE \
     --env PEERS=3 \
     --env LOG_CONFS=true \
-    --publish "51820:51820/udp" \
     --volume /etc/localtime:/etc/localtime:ro \
     --volume /srv/containers/wireguard/config:/config:Z \
       wireguard:helheim

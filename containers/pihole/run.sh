@@ -19,18 +19,11 @@ echo "Starting ${CONTAINER_NAME}..."
 #  --cap-add=NET_ADMIN \
 #  --cap-add=NET_RAW \
 #  --cap-add=CHOWN \
-#  --publish "53:53/tcp" \
-#  --publish "53:53/udp" \
-#  --publish "67:67/udp" \
-#  --publish "28080:80" \
-#  --publish "28081:443" \
 #  --volume /etc/localtime:/etc/localtime:ro \
 #  --volume /srv/containers/pihole/etc/hosts:/etc/hosts:ro \
 #  --volume /srv/containers/pihole/etc/pihole:/etc/pihole:rw,U \
 #  --volume /srv/containers/pihole/etc/dnsmasq:/etc/dnsmasq.d:rw,U \
 #  "${IMAGE_TAG}"
-# Add these options later?:
-#  --publish "123:123" \  # NTP
 systemctl --user start pihole_pod
 
 echo "${CONTAINER_NAME} is starting on http://127.0.0.1"
