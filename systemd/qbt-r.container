@@ -7,6 +7,7 @@ After=network-online.target
 # Image built locally as qbt_r:helheim
 Image=localhost/qbt_r:helheim
 Network=pasta
+DNS=192.168.2.3
 DNS=192.168.2.2
 
 # Rootless container
