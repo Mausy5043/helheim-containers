@@ -13,7 +13,6 @@ ExecStart=/usr/bin/podman run \
     --name lektrix_collect \
     --rm \
     --network=host \
-    --dns=192.168.2.3 \
     --volume /etc/localtime:/etc/localtime:ro \
     --volume /srv/containers/lektrix/config:/app/config:ro \
     --volume /srv/containers/lektrix/data:/app/data:rw \
