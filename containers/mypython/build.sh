@@ -11,6 +11,7 @@ echo "Building ${IMAGE_TAG}..."
 podman build \
     --tag "${IMAGE_TAG}" \
     --pull=newer \
+    --no-cache \
     --build-context app=./config \
     --file Containerfile \
     .

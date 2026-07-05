@@ -11,6 +11,7 @@ echo "Building ${IMAGE_TAG}..."
 
 podman build \
     --tag "${IMAGE_TAG}" \
+    --no-cache \
     --pull=newer \
     --build-context lektrix=/home/beheer/git/lektrix \
     --file Containerfile \
