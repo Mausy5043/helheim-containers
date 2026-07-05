@@ -14,6 +14,7 @@ echo "Starting ${CONTAINER_NAME}..."
 #podman run -d --rm \
 #  --name "${CONTAINER_NAME}" \
 #  --hostname "${HOST_TAG}" \
+#  --network=host \
 #  --env FTLCONF_webserver_api_password="" \
 #  --cap-add=NET_ADMIN \
 #  --cap-add=NET_RAW \
