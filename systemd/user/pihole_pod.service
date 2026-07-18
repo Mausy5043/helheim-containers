@@ -20,6 +20,7 @@ ExecStart=/usr/bin/podman run \
     --volume /srv/containers/pihole/etc/hosts:/etc/hosts:ro \
     --volume /srv/containers/pihole/etc/pihole:/etc/pihole:rw,U \
     --volume /srv/containers/pihole/etc/dnsmasq:/etc/dnsmasq.d:rw,U \
+    --health-interval 20m \
       pihole:helheim
 
 ExecStop=/usr/bin/podman stop pihole
