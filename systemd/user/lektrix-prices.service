@@ -12,7 +12,7 @@ After=network-online.target
 [Service]
 ExecStartPre=/usr/bin/podman rm -f lektrix_prices 2>/dev/null || true
 # Excecute the hourly trending script inside a rootless Podman container
-ExecStart=/usr/bin/podman run \
+ExecStart=/usr/bin/podman --log-level=error run \
     --name lektrix_prices \
     --rm \
     --volume /etc/localtime:/etc/localtime:ro \

@@ -7,7 +7,7 @@ After=network-online.target
 # Always recreate the container to avoid stale state
 ExecStartPre=/usr/bin/podman rm -f lektrix_web 2>/dev/null || true
 
-ExecStart=/usr/bin/podman run \
+ExecStart=/usr/bin/podman --log-level=error run \
     --name lektrix_web \
     --rm \
     --publish 18080:80 \
